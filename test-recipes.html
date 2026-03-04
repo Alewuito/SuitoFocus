@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Cargador de Recetas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .stats-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+        .stat-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .stat-value {
+            color: #007bff;
+            font-size: 1.2em;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .error {
+            background: #ffe6e6;
+            color: #d00;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-section h2 {
+            color: #333;
+            margin-top: 0;
+        }
+        .recipes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .recipe-card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #007bff;
+        }
+        .recipe-card h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+            color: #333;
+        }
+        .recipe-card .meta {
+            font-size: 0.85em;
+            color: #666;
+            margin: 5px 0;
+        }
+        .recipe-card .tags {
+            margin-top: 10px;
+        }
+        .tag {
+            display: inline-block;
+            background: #007bff;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75em;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test del Cargador de Recetas Dataset</h1>
+    
+    <div class="stats-container">
+        <h2>Estadísticas del Dataset</h2>
+        <div id="stats-content" class="loading">
+            Cargando dataset...
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>Buscar Recetas por Tipo</h2>
+        <button onclick="testRecipes('breakfast')">Desayunos</button>
+        <button onclick="testRecipes('lunch')">Almuerzos</button>
+        <button onclick="testRecipes('dinner')">Cenas</button>
+        <button onclick="testRecipes('snack')">Snacks</button>
+        <button onclick="testAirfryerRecipes()">Solo Airfryer</button>
+        <button onclick="testVegetarianRecipes()">Vegetarianas</button>
+        
+        <div id="recipes-results" class="recipes-grid">
+            <!-- Recetas se mostrarán aquí -->
+        </div>
+    </div>
+
+    <script src="js/nutrition/recipes-loader.js"></script>
+    <script>
+        // Cargar estadísticas al iniciar
+        async function loadStats() {
+            try {
+                const stats = await RecipesLoader.getDatasetStats();
+                
+                document.getElementById('stats-content').innerHTML = `
+                    <div class="stat-item">
+                        <span class="stat-label">Total de Recetas:</span>
+                        <span class="stat-value">${stats.total.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Recetas con Airfryer:</span>
+                        <span class="stat-value">${stats.airfryer.toLocaleString()} (${Math.round(stats.airfryer/stats.total*100)}%)</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Recetas Veganas:</span>
+                        <span class="stat-value">${stats.vegan.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Recetas Vegetarianas:</span>
+                        <span class="stat-value">${stats.vegetarian.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Recetas Rápidas (≤5 pasos):</span>
+                        <span class="stat-value">${stats.quick.toLocaleString()}</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Recetas de Desayuno:</span>
+                        <span class="stat-value">${stats.breakfast.toLocaleString()}</span>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('stats-content').innerHTML = `
+                    <div class="error">
+                        ❌ Error cargando estadísticas: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        // Perfil de prueba
+        const testProfile = {
+            hasAirfryer: false,
+            dietType: 'omnivore',
+            allergens: [],
+            cookingTime: 'any'
+        };
+
+        // Buscar recetas por tipo de comida
+        async function testRecipes(mealType) {
+            const resultsDiv = document.getElementById('recipes-results');
+            resultsDiv.innerHTML = '<div class="loading">Buscando recetas...</div>';
+            
+            try {
+                const recipes = await RecipesLoader.getRecipesForMeal(mealType, testProfile, 12);
+                
+                if (recipes.length === 0) {
+                    resultsDiv.innerHTML = '<div class="error">No se encontraron recetas para este tipo de comida.</div>';
+                    return;
+                }
+                
+                resultsDiv.innerHTML = recipes.map(recipe => {
+                    const converted = RecipesLoader.convertToOurFormat(recipe);
+                    return `
+                        <div class="recipe-card">
+                            <h3>${recipe.recipe_title}</h3>
+                            <div class="meta">Ingredientes: ${recipe.num_ingredients || 0}</div>
+                            <div class="meta">Pasos: ${recipe.num_steps || 0}</div>
+                            <div class="meta">Calorías: ~${converted.baseKcal} kcal</div>
+                            <div class="meta">P: ${converted.macros.protein}g | C: ${converted.macros.carbs}g | G: ${converted.macros.fat}g</div>
+                            <div class="tags">
+                                ${converted.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Buscar solo recetas de airfryer
+        async function testAirfryerRecipes() {
+            const resultsDiv = document.getElementById('recipes-results');
+            resultsDiv.innerHTML = '<div class="loading">Buscando recetas de airfryer...</div>';
+            
+            try {
+                const airfryerProfile = {
+                    ...testProfile,
+                    hasAirfryer: true
+                };
+                
+                const recipes = await RecipesLoader.getRecipesForMeal('lunch', airfryerProfile, 12);
+                
+                resultsDiv.innerHTML = recipes.map(recipe => {
+                    const converted = RecipesLoader.convertToOurFormat(recipe);
+                    return `
+                        <div class="recipe-card">
+                            <h3>${recipe.recipe_title}</h3>
+                            <div class="meta">Ingredientes: ${recipe.num_ingredients || 0}</div>
+                            <div class="meta">Pasos: ${recipe.num_steps || 0}</div>
+                            <div class="meta">Calorías: ~${converted.baseKcal} kcal</div>
+                            <div class="tags">
+                                <span class="tag">AIRFRYER</span>
+                                ${converted.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Buscar recetas vegetarianas
+        async function testVegetarianRecipes() {
+            const resultsDiv = document.getElementById('recipes-results');
+            resultsDiv.innerHTML = '<div class="loading">Buscando recetas vegetarianas...</div>';
+            
+            try {
+                const vegProfile = {
+                    ...testProfile,
+                    dietType: 'vegetarian'
+                };
+                
+                const recipes = await RecipesLoader.getRecipesForMeal('lunch', vegProfile, 12);
+                
+                resultsDiv.innerHTML = recipes.map(recipe => {
+                    const converted = RecipesLoader.convertToOurFormat(recipe);
+                    return `
+                        <div class="recipe-card">
+                            <h3>${recipe.recipe_title}</h3>
+                            <div class="meta">Ingredientes: ${recipe.num_ingredients || 0}</div>
+                            <div class="meta">Pasos: ${recipe.num_steps || 0}</div>
+                            <div class="meta">Calorías: ~${converted.baseKcal} kcal</div>
+                            <div class="tags">
+                                <span class="tag">VEGETARIANA</span>
+                                ${converted.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+            }
+        }
+
+        // Cargar estadísticas al iniciar
+        loadStats();
+    </script>
+</body>
+</html>

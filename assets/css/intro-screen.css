@@ -1,0 +1,410 @@
+/* =============================================
+   PANTALLA DE INTRODUCCIÓN - SUITOFOCUS
+   ============================================= */
+
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.5s ease;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+#intro-screen.fade-out {
+    animation: fadeOut 0.8s ease forwards;
+}
+
+/* Decoración de fondo sutil */
+#intro-screen::before {
+    content: '';
+    position: fixed;
+    overflow-y: auto;
+   
+    width: 100dvw;
+    height: 100dvh;
+    background: radial-gradient(circle at 30% 50%, var(--primary-color) 0%, transparent 25%),
+                radial-gradient(circle at 70% 50%, var(--secondary-color) 0%, transparent 25%);
+    opacity: 0.03;
+    
+    animation: rotateBackground 40s linear infinite;
+}
+
+@keyframes rotateBackground {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Contenedor principal */
+.intro-main-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 0;
+}
+
+/* Logo y Título */
+.intro-logo-container {
+    text-align: center;
+    animation: slideDown 1s ease;
+}
+
+.intro-logo {
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--primary-color);
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: -2px;
+    margin: 0;
+    line-height: 1;
+    text-shadow: 2px 2px 0 var(--secondary-color);
+    position: relative;
+}
+
+.intro-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border-radius: 2px;
+}
+
+.intro-tagline {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    font-weight: 300;
+    margin-top: 25px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+/* Contenido Principal - Grid de 2 columnas */
+.intro-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    animation: slideUp 1s ease 0.3s backwards;
+}
+
+/* Panel Izquierdo - Disclaimer */
+.intro-disclaimer-panel {
+    background: var(--accent-color);
+    border-radius: 20px;
+    padding: 40px;
+    border: 2px solid var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.intro-disclaimer-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0 0 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.intro-disclaimer-icon {
+    width: 35px;
+    height: 35px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.intro-disclaimer-text {
+    color: var(--text-color);
+    line-height: 1.8;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.intro-disclaimer-text strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Panel Derecho - Features */
+.intro-features-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.intro-feature {
+    background: var(--accent-color);
+    border-radius: 15px;
+    padding: 25px 30px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.intro-feature:hover {
+    border-color: var(--primary-color);
+    transform: translateX(5px);
+    box-shadow: -5px 0 0 var(--primary-color);
+}
+
+.intro-feature-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.intro-feature-text {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    margin: 0;
+    opacity: 0.8;
+}
+
+/* Botón de Continuar */
+.intro-footer-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: fadeIn 1s ease 0.6s backwards;
+}
+
+.intro-continue-btn {
+    padding: 20px 80px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.intro-continue-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s;
+}
+
+.intro-continue-btn:hover::before {
+    left: 100%;
+}
+
+.intro-continue-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.intro-continue-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Footer */
+.intro-footer {
+    text-align: center;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .intro-logo {
+        font-size: 4rem;
+    }
+    
+    .intro-content-grid {
+        gap: 30px;
+    }
+    
+    .intro-disclaimer-panel,
+    .intro-feature {
+        padding: 30px;
+    }
+    
+    .intro-main-container {
+        padding: 30px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #intro-screen {
+        padding: 15px 0;
+    }
+    
+    .intro-main-container {
+        padding: 20px 0;
+        gap: 30px;
+    }
+    
+    .intro-logo {
+        font-size: 3.5rem;
+    }
+    
+    .intro-tagline {
+        font-size: 1.1rem;
+    }
+    
+    .intro-content-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .intro-disclaimer-panel {
+        padding: 30px 25px;
+    }
+    
+    .intro-disclaimer-title {
+        font-size: 1.3rem;
+    }
+    
+    .intro-continue-btn {
+        font-size: 1.1rem;
+        padding: 18px 60px;
+    }
+    
+    .intro-feature {
+        padding: 20px 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .intro-logo {
+        font-size: 2.5rem;
+    }
+    
+    .intro-logo::after {
+        width: 150px;
+    }
+    
+    .intro-tagline {
+        font-size: 0.95rem;
+    }
+    
+    .intro-disclaimer-panel {
+        padding: 25px 20px;
+    }
+    
+    .intro-disclaimer-text {
+        font-size: 0.9rem;
+    }
+    
+    .intro-continue-btn {
+        font-size: 1rem;
+        padding: 16px 50px;
+    }
+    
+    .intro-main-container {
+        padding: 15px 0;
+        gap: 25px;
+    }
+}
+
+/* =============================================
+   SCROLLBAR PERSONALIZADO
+   ============================================= */
+
+/* Pantalla de introducción */
+#intro-screen::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+#intro-screen::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#intro-screen::-webkit-scrollbar-thumb {
+    background: rgba(46, 204, 113, 0.2);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+#intro-screen::-webkit-scrollbar-thumb:hover {
+    background: rgba(46, 204, 113, 0.4);
+}
+
+/* Firefox */
+#intro-screen {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(46, 204, 113, 0.2) transparent;
+}
+

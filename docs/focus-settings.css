@@ -1,0 +1,1012 @@
+/* ===== ESTILOS PARA CONFIGURACIÓN Y AJUSTES ===== */
+
+/* Botón flotante de configuración */
+.settings-btn {
+    bottom: 90px !important;
+}
+
+/* Panel de configuración unificado */
+#unified-settings-panel {
+    position: fixed;
+    top: 90px;
+    right: 25px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px;
+    width: 380px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#unified-settings-panel h3 {
+    margin: 0 0 20px 0;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+/* Tabs de configuración */
+.settings-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.settings-tab {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    opacity: 0.6;
+}
+
+.settings-tab:hover {
+    opacity: 0.8;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.settings-tab.active {
+    opacity: 1;
+    border-bottom-color: var(--primary-color);
+    font-weight: 600;
+}
+
+.settings-tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.settings-tab-content.active {
+    display: block;
+}
+
+/* Secciones de ajustes */
+.settings-section {
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.settings-section h4 {
+    margin: 0 0 15px 0;
+    font-size: 1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Selector de elemento de meditación */
+.meditation-element-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.element-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+}
+
+.element-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.element-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.element-option input[type="radio"]:checked + .element-icon {
+    transform: scale(1.2);
+}
+
+.element-option input[type="radio"]:checked ~ .element-name {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.element-option:has(input:checked) {
+    background: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+}
+
+.element-icon {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+    transition: transform 0.3s;
+}
+
+.element-name {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-align: center;
+    transition: all 0.3s;
+}
+
+/* Botones preset de temporizador */
+.preset-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.preset-btn {
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-color);
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.preset-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
+.preset-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+/* Temporizador personalizado */
+.custom-timer {
+    display: flex;
+    gap: 8px;
+}
+
+.custom-timer input {
+    flex: 1;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.custom-timer button {
+    padding: 10px 20px;
+    background: var(--secondary-color);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.custom-timer button:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+}
+
+/* Botones de sonido */
+.sound-options {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.sound-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.sound-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sound-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 12px rgba(46, 204, 113, 0.3);
+}
+
+/* Contador de agua compacto */
+.water-tracker-compact {
+    text-align: center;
+}
+
+.water-tracker-compact p {
+    margin: 0 0 10px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.water-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.water-btn-compact {
+    flex: 1;
+    padding: 10px;
+    background: linear-gradient(135deg, #0288d1, #03a9f4);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.water-btn-compact:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(2, 136, 209, 0.4);
+}
+
+/* Toggle options (checkboxes) */
+.toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.toggle-option:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.toggle-option span {
+    flex: 1;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* Gestión de datos */
+.data-section {
+    margin-bottom: 20px;
+}
+
+.data-info {
+    margin: 0 0 15px 0;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.data-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.data-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+
+.data-btn.export {
+    background: var(--primary-color);
+    color: white;
+}
+
+.data-btn.import {
+    background: var(--secondary-color);
+    color: white;
+}
+
+.data-btn.danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.data-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.app-version,
+.storage-info {
+    margin: 5px 0;
+    font-size: 0.85rem;
+    color: var(--text-color);
+    opacity: 0.6;
+}
+
+/* Elementos de meditación en el centro */
+.meditation-element {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== VELA MEJORADA ========== */
+.candle-container { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    transform: scale(1.8);
+    filter: drop-shadow(0 10px 30px rgba(255, 152, 0, 0.4));
+}
+
+.flame { 
+    width: 35px; 
+    height: 70px; 
+    background: linear-gradient(to top, 
+        #ff6b00 0%, 
+        #ff8f00 20%,
+        #ffa726 40%,
+        #ffb74d 60%,
+        #ffe082 80%,
+        #fff9c4 100%
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 
+        0 0 20px rgba(255, 152, 0, 0.8),
+        0 0 40px rgba(255, 193, 7, 0.6),
+        0 0 60px rgba(255, 235, 59, 0.4),
+        inset 0 0 15px rgba(255, 255, 255, 0.3);
+    animation: flame-flicker 2s ease-in-out infinite;
+    position: relative;
+}
+
+.flame::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 15px;
+    height: 30px;
+    background: linear-gradient(to top, transparent, rgba(255, 255, 255, 0.8));
+    border-radius: 50%;
+    filter: blur(3px);
+}
+
+.wick { 
+    width: 8px; 
+    height: 18px; 
+    background: linear-gradient(to bottom, #5d4037 0%, #3e2723 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.wax { 
+    width: 110px; 
+    height: 180px; 
+    background: linear-gradient(to bottom, 
+        #fffbf0 0%,
+        #fff8e1 30%,
+        #f5e6d3 70%,
+        #ede7dc 100%
+    );
+    border-radius: 0 0 20px 20px;
+    box-shadow: 
+        inset 0 -15px 25px rgba(0, 0, 0, 0.1),
+        inset 0 5px 10px rgba(255, 255, 255, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.wax::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 5px;
+    background: linear-gradient(to bottom, #e0d5c7 0%, transparent 100%);
+    border-radius: 50%;
+}
+
+.wax::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 15%;
+    width: 50%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+@keyframes flame-flicker { 
+    0%, 100% { 
+        transform: scaleY(1) scaleX(1); 
+        opacity: 1;
+        filter: brightness(1);
+    } 
+    25% {
+        transform: scaleY(1.05) scaleX(0.98);
+        opacity: 0.95;
+        filter: brightness(1.1);
+    }
+    50% { 
+        transform: scaleY(0.98) scaleX(1.02); 
+        opacity: 0.92;
+        filter: brightness(1.05);
+    }
+    75% {
+        transform: scaleY(1.03) scaleX(0.97);
+        opacity: 0.97;
+        filter: brightness(1.08);
+    }
+}
+
+/* ========== CASCADA MEJORADA ========== */
+.waterfall-container {
+    position: relative;
+    width: 220px;
+    height: 320px;
+    filter: drop-shadow(0 15px 40px rgba(30, 144, 255, 0.4));
+}
+
+.waterfall {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(135, 206, 250, 0.1) 0%,
+        rgba(100, 180, 230, 0.3) 30%,
+        rgba(70, 160, 220, 0.5) 60%,
+        rgba(30, 144, 255, 0.7) 100%
+    );
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        inset 0 0 50px rgba(255, 255, 255, 0.2),
+        0 20px 60px rgba(30, 144, 255, 0.4);
+}
+
+.waterfall::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 50%
+    );
+    filter: blur(10px);
+}
+
+.water-drop {
+    position: absolute;
+    width: 4px;
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(135, 206, 250, 0.8) 50%,
+        rgba(30, 144, 255, 0.6) 100%
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    animation: waterfall-flow 2s infinite linear;
+}
+
+@keyframes waterfall-flow {
+    0% {
+        top: -20px;
+        opacity: 0;
+        transform: scaleY(1);
+    }
+    10% {
+        opacity: 1;
+        transform: scaleY(1.2);
+    }
+    50% {
+        transform: scaleY(1.5);
+    }
+    90% {
+        opacity: 0.8;
+        transform: scaleY(1);
+    }
+    100% {
+        top: 100%;
+        opacity: 0;
+        transform: scaleY(0.8);
+    }
+}
+
+/* ========== BONSÁI MEJORADO ========== */
+.bonsai-container {
+    position: relative;
+    width: 200px;
+    height: 280px;
+    filter: drop-shadow(0 15px 40px rgba(74, 124, 44, 0.4));
+}
+
+.bonsai-pot {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 70px;
+    background: linear-gradient(180deg, 
+        #a0522d 0%,
+        #8b4513 30%,
+        #654321 70%,
+        #3e2723 100%
+    );
+    border-radius: 5px 5px 15px 15px;
+    box-shadow: 
+        inset 0 5px 15px rgba(0, 0, 0, 0.4),
+        inset 0 -3px 10px rgba(139, 69, 19, 0.6),
+        0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.bonsai-pot::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10%;
+    width: 80%;
+    height: 15px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(160, 82, 45, 0.8) 20%,
+        rgba(139, 69, 19, 0.6) 50%,
+        rgba(160, 82, 45, 0.8) 80%,
+        transparent 100%
+    );
+    border-radius: 3px;
+}
+
+.bonsai-tree {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 180px;
+    background: radial-gradient(ellipse at center,
+        #5a8c3a 0%,
+        #4a7c2c 30%,
+        #3a6b1f 60%,
+        #2d5016 100%
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    box-shadow: 
+        inset -10px -10px 20px rgba(0, 0, 0, 0.3),
+        inset 10px 10px 20px rgba(139, 195, 74, 0.3),
+        0 0 30px rgba(74, 124, 44, 0.5);
+    animation: bonsai-sway 5s ease-in-out infinite;
+}
+
+.bonsai-tree::before {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 70px;
+    background: linear-gradient(180deg,
+        #5d4037 0%,
+        #4e342e 50%,
+        #3e2723 100%
+    );
+    border-radius: 5px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes bonsai-sway {
+    0%, 100% {
+        transform: translateX(-50%) rotate(-3deg);
+    }
+    50% {
+        transform: translateX(-50%) rotate(3deg);
+    }
+}
+
+/* ========== FLOR DE LOTO MEJORADA ========== */
+.lotus-container {
+    position: relative;
+    width: 240px;
+    height: 240px;
+    filter: drop-shadow(0 15px 40px rgba(255, 128, 191, 0.5));
+}
+
+.lotus-flower {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    animation: lotus-bloom 4s ease-in-out infinite;
+}
+
+.lotus-flower::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle,
+        #fff59d 0%,
+        #ffeb3b 40%,
+        #fdd835 100%
+    );
+    border-radius: 50%;
+    box-shadow: 
+        0 0 20px rgba(255, 235, 59, 0.8),
+        inset 0 0 15px rgba(255, 193, 7, 0.6);
+}
+
+.lotus-petal {
+    position: absolute;
+    width: 90px;
+    height: 120px;
+    background: linear-gradient(135deg, 
+        #ffd6ec 0%,
+        #ffb3d9 20%,
+        #ff80bf 60%,
+        #f06292 100%
+    );
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    top: 50%;
+    left: 50%;
+    transform-origin: center bottom;
+    box-shadow: 
+        inset -5px -10px 20px rgba(240, 98, 146, 0.4),
+        inset 5px 5px 15px rgba(255, 255, 255, 0.3),
+        0 5px 20px rgba(255, 128, 191, 0.5);
+}
+
+.lotus-petal::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 40%;
+    background: linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.5) 0%,
+        transparent 100%
+    );
+    border-radius: 50%;
+    filter: blur(5px);
+}
+
+.lotus-petal:nth-child(1) {
+    transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.lotus-petal:nth-child(2) {
+    transform: translate(-50%, -50%) rotate(72deg);
+}
+
+.lotus-petal:nth-child(3) {
+    transform: translate(-50%, -50%) rotate(144deg);
+}
+
+.lotus-petal:nth-child(4) {
+    transform: translate(-50%, -50%) rotate(216deg);
+}
+
+.lotus-petal:nth-child(5) {
+    transform: translate(-50%, -50%) rotate(288deg);
+}
+
+@keyframes lotus-bloom {
+    0%, 100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.08);
+        filter: brightness(1.1);
+    }
+}
+
+/* ========== JARDÍN ZEN MEJORADO ========== */
+.zen-container {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle at center,
+        #f5f0e8 0%,
+        #ede7dc 30%,
+        #e0d5c7 70%,
+        #d4c4b0 100%
+    );
+    border-radius: 50%;
+    box-shadow: 
+        inset 0 10px 30px rgba(0, 0, 0, 0.15),
+        inset 0 -10px 30px rgba(255, 255, 255, 0.2),
+        0 15px 50px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.zen-rock {
+    position: absolute;
+    background: linear-gradient(135deg,
+        #a0a0a0 0%,
+        #808080 40%,
+        #606060 100%
+    );
+    border-radius: 45% 55% 50% 50% / 50% 45% 55% 50%;
+    box-shadow: 
+        inset -3px -3px 8px rgba(0, 0, 0, 0.4),
+        inset 3px 3px 8px rgba(160, 160, 160, 0.4),
+        0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.zen-rock:nth-child(2) {
+    width: 70px;
+    height: 60px;
+    top: 35%;
+    left: 25%;
+    animation: zen-rock-pulse 6s ease-in-out infinite;
+}
+
+.zen-rock:nth-child(3) {
+    width: 55px;
+    height: 48px;
+    top: 48%;
+    left: 58%;
+    animation: zen-rock-pulse 6s ease-in-out 2s infinite;
+}
+
+.zen-rock:nth-child(4) {
+    width: 42px;
+    height: 36px;
+    top: 32%;
+    left: 65%;
+    animation: zen-rock-pulse 6s ease-in-out 4s infinite;
+}
+
+.zen-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: 
+        repeating-linear-gradient(
+            90deg,
+            transparent 0px,
+            transparent 8px,
+            rgba(0, 0, 0, 0.03) 8px,
+            rgba(0, 0, 0, 0.03) 10px
+        ),
+        repeating-linear-gradient(
+            45deg,
+            transparent 0px,
+            transparent 15px,
+            rgba(0, 0, 0, 0.02) 15px,
+            rgba(0, 0, 0, 0.02) 17px
+        );
+    animation: zen-pattern-flow 20s linear infinite;
+    opacity: 0.6;
+}
+
+@keyframes zen-rock-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes zen-pattern-flow {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scrollbar personalizado para el panel */
+#unified-settings-panel::-webkit-scrollbar,
+#focus-settings-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+#unified-settings-panel::-webkit-scrollbar-track,
+#focus-settings-panel::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+}
+
+#unified-settings-panel::-webkit-scrollbar-thumb,
+#focus-settings-panel::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+#unified-settings-panel::-webkit-scrollbar-thumb:hover,
+#focus-settings-panel::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* ===== ESTILOS PARA TAB DE PERFIL ===== */
+.profile-section {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.profile-section h4 {
+    margin: 0 0 15px 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 8px;
+}
+
+.profile-section .form-group {
+    margin-bottom: 15px;
+}
+
+.profile-section label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.profile-section .form-input,
+.profile-section .form-select {
+    width: 100%;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.profile-section .form-input:focus,
+.profile-section .form-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-section .checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.profile-section .checkbox-option {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.85rem;
+}
+
+.profile-section .checkbox-option:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.profile-section .checkbox-option input[type="checkbox"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.profile-section .checkbox-option input[type="checkbox"]:checked + span,
+.profile-section .checkbox-option:has(input:checked) {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.profile-actions .btn-primary {
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile-actions .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+}
+
+.profile-actions .btn-secondary {
+    padding: 12px 20px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.profile-actions .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+}

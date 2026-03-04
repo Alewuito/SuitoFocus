@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SuitoFocus - Tu Plan y Enfoque</title>
+    
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/widgets.css">
+    <link rel="stylesheet" href="css/focus-settings.css">
+    <link rel="stylesheet" href="css/user-onboarding.css">
+    <link rel="stylesheet" href="css/intro-screen.css">
+    
+    <!-- Fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Anton&family=Rubik:wght@400;600;700&family=Righteous&family=Racing+Sans+One&family=Bowlby+One+SC&display=swap" rel="stylesheet">
+</head>
+<body data-theme="autumn">
+    <!-- Capa para el efecto de brillo -->
+    <div id="brightness-overlay"></div>
+
+    <!-- Sistema de notificaciones discreto -->
+    <div id="notification-container"></div>
+
+    <!-- ===== PANTALLA DE INTRODUCCIÓN ===== -->
+    <div id="intro-screen">
+        <div class="intro-main-container">
+            <!-- Logo y Título -->
+            <div class="intro-logo-container">
+                <h1 class="intro-logo">SuitoFocus</h1>
+                <p class="intro-tagline">Tu asistente personal de productividad y nutrición</p>
+            </div>
+
+            <!-- Grid de 2 Columnas -->
+            <div class="intro-content-grid">
+                <!-- Panel Izquierdo - Disclaimer -->
+                <div class="intro-disclaimer-panel">
+                    <div class="intro-disclaimer-title">
+                        <div class="intro-disclaimer-icon">!</div>
+                        <span>Aviso Importante</span>
+                    </div>
+                    <p class="intro-disclaimer-text">
+                        <strong>Esta aplicación proporciona información nutricional con fines orientativos.</strong>
+                        Los cálculos se basan en fórmulas científicas estándar, pero cada persona es única.
+                        <br><br>
+                        <strong>Se recomienda encarecidamente consultar con un nutricionista o médico especialista</strong>
+                        antes de realizar cambios significativos en tu dieta o rutina de ejercicio,
+                        especialmente si tienes condiciones médicas preexistentes.
+                    </p>
+                </div>
+
+                <!-- Panel Derecho - Features -->
+                <div class="intro-features-panel">
+                    <div class="intro-feature">
+                        <div class="intro-feature-title">Modo Focus</div>
+                        <p class="intro-feature-text">Maximiza tu productividad con herramientas de concentración y gestión del tiempo</p>
+                    </div>
+                    <div class="intro-feature">
+                        <div class="intro-feature-title">Planes Personalizados</div>
+                        <p class="intro-feature-text">Nutrición adaptada a tus objetivos, actividad física y preferencias alimentarias</p>
+                    </div>
+                    <div class="intro-feature">
+                        <div class="intro-feature-title">Seguimiento Inteligente</div>
+                        <p class="intro-feature-text">Monitorea tu progreso con métricas personalizadas y visualizaciones claras</p>
+                    </div>
+                    <div class="intro-feature">
+                        <div class="intro-feature-title">Multi-Usuario</div>
+                        <p class="intro-feature-text">Crea perfiles independientes para cada miembro de tu familia</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer con botón -->
+            <div class="intro-footer-section">
+                <button class="intro-continue-btn" id="intro-continue-btn">
+                    Comenzar
+                </button>
+                <div class="intro-footer">
+                    <p>SuitoFocus &copy; 2025 - Versión 2.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FIN PANTALLA DE INTRODUCCIÓN ===== -->
+
+    <!-- ===== PANTALLA DE SELECCIÓN DE USUARIO ===== -->
+    <div id="user-selection-screen" class="hidden">
+        <div class="user-selection-container">
+            <div class="user-selection-header">
+                <h1>SuitoFocus</h1>
+                <p>Selecciona tu perfil o crea uno nuevo</p>
+                <p class="session-info">Tu sesión se guardará automáticamente durante 30 días</p>
+            </div>
+            
+            <div class="users-grid" id="users-grid">
+                <!-- Los usuarios se cargarán dinámicamente aquí -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FORMULARIO DE ONBOARDING ===== -->
+    <div id="onboarding-screen" class="hidden">
+        <div class="onboarding-container">
+            <div class="onboarding-header">
+                <h1>✨ Crea tu Perfil</h1>
+                <p>Vamos a personalizar tu experiencia</p>
+            </div>
+
+            <!-- Barra de progreso -->
+            <div class="onboarding-progress">
+                <div class="progress-step active" data-step="1">1</div>
+                <div class="progress-step" data-step="2">2</div>
+                <div class="progress-step" data-step="3">3</div>
+                <div class="progress-step" data-step="4">4</div>
+                <div class="progress-step" data-step="5">5</div>
+                <div class="progress-step" data-step="6">6</div>
+                <div class="progress-step" data-step="7">7</div>
+            </div>
+
+            <form id="onboarding-form">
+                <!-- PASO 1: Información Básica -->
+                <div class="onboarding-step active" data-step="1">
+                    <h2 class="step-title">Información Básica</h2>
+                    <p class="step-subtitle">Cuéntanos un poco sobre ti</p>
+
+                    <div class="form-group">
+                        <label for="user-name">Nombre <span class="required">*</span></label>
+                        <input type="text" id="user-name" class="form-input" placeholder="Tu nombre" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-age">Edad <span class="required">*</span></label>
+                            <input type="number" id="user-age" class="form-input" placeholder="25" min="15" max="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user-gender">Sexo <span class="required">*</span></label>
+                            <select id="user-gender" class="form-select" required>
+                                <option value="">Selecciona...</option>
+                                <option value="male">Masculino</option>
+                                <option value="female">Femenino</option>
+                                <option value="other">Otro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-weight">Peso Actual (kg) <span class="required">*</span></label>
+                            <input type="number" id="user-weight" class="form-input" placeholder="70" min="30" max="300" step="0.1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user-height">Altura (cm) <span class="required">*</span></label>
+                            <input type="number" id="user-height" class="form-input" placeholder="170" min="100" max="250" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="user-target-weight">Peso Objetivo (kg)</label>
+                            <input type="number" id="user-target-weight" class="form-input" placeholder="65" min="30" max="300" step="0.1">
+                            <small style="color: var(--text-color); opacity: 0.7; font-size: 0.85em; margin-top: 5px; display: block;">Déjalo vacío si solo quieres mantener tu peso actual</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="user-target-date">Fecha Objetivo (opcional)</label>
+                            <input type="date" id="user-target-date" class="form-input">
+                            <small style="color: var(--text-color); opacity: 0.7; font-size: 0.85em; margin-top: 5px; display: block;">¿Cuándo quieres alcanzar tu objetivo?</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 2: Nivel de Actividad -->
+                <div class="onboarding-step" data-step="2">
+                    <h2 class="step-title">Nivel de Actividad</h2>
+                    <p class="step-subtitle">¿Cuánto ejercicio haces normalmente?</p>
+
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="activity-level" id="activity-sedentary" value="sedentary" required>
+                            <label for="activity-sedentary">
+                                <div class="radio-label">Sedentario</div>
+                                <div class="radio-description">Poco o ningún ejercicio</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="activity-level" id="activity-light" value="light">
+                            <label for="activity-light">
+                                <div class="radio-label">Ligero</div>
+                                <div class="radio-description">Ejercicio 1-3 días/semana</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="activity-level" id="activity-moderate" value="moderate">
+                            <label for="activity-moderate">
+                                <div class="radio-label">Moderado</div>
+                                <div class="radio-description">Ejercicio 3-5 días/semana</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="activity-level" id="activity-active" value="active">
+                            <label for="activity-active">
+                                <div class="radio-label">Activo</div>
+                                <div class="radio-description">Ejercicio 6-7 días/semana</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="activity-level" id="activity-very-active" value="very_active">
+                            <label for="activity-very-active">
+                                <div class="radio-label">Muy Activo</div>
+                                <div class="radio-description">Ejercicio intenso + trabajo físico</div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 3: Objetivo -->
+                <div class="onboarding-step" data-step="3">
+                    <h2 class="step-title">Tu Objetivo</h2>
+                    <p class="step-subtitle">¿Qué quieres lograr?</p>
+
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="goal" id="goal-lose" value="lose" required>
+                            <label for="goal-lose">
+                                <div class="radio-label">Perder Peso</div>
+                                <div class="radio-description">Déficit progresivo: 150-550 kcal/día según experiencia</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="goal" id="goal-maintain" value="maintain">
+                            <label for="goal-maintain">
+                                <div class="radio-label">Mantener Peso</div>
+                                <div class="radio-description">Dieta equilibrada = TDEE exacto</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="goal" id="goal-gain" value="gain">
+                            <label for="goal-gain">
+                                <div class="radio-label">Ganar Peso</div>
+                                <div class="radio-description">Superávit progresivo: 100-500 kcal/día según experiencia</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="diet-type">Tipo de Dieta</label>
+                        <select id="diet-type" class="form-select">
+                            <option value="balanced">Balanceada (40% carbs, 30% proteína, 30% grasa) - Recomendado para mantenimiento</option>
+                            <option value="high_protein">Alta en Proteína (35% carbs, 35% proteína, 30% grasa) - Recomendado para ganar músculo</option>
+                            <option value="low_carb">Baja en Carbohidratos (20% carbs, 30% proteína, 50% grasa) - Recomendado para pérdida de peso</option>
+                            <option value="vegetarian">Vegetariana</option>
+                            <option value="vegan">Vegana</option>
+                        </select>
+                        <p class="diet-recommendation" style="margin-top: 10px; font-size: 0.9rem; color: var(--text-muted); font-style: italic;">
+                            La recomendación se actualizará según tu objetivo
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PASO 4: Experiencia con Dietas -->
+                <div class="onboarding-step" data-step="4">
+                    <h2 class="step-title">Experiencia con Dietas</h2>
+                    <p class="step-subtitle">Esto nos ayudará a ajustar la intensidad del cambio calórico</p>
+
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="diet-experience" id="exp-beginner" value="beginner" required>
+                            <label for="exp-beginner">
+                                <div class="radio-label">🌱 Primera vez / Principiante</div>
+                                <div class="radio-description">Nunca he seguido una dieta estructurada o hace mucho tiempo. Necesito cambios graduales.</div>
+                            </label>
+                        </div>
+
+                        <div class="radio-option">
+                            <input type="radio" name="diet-experience" id="exp-experienced" value="experienced">
+                            <label for="exp-experienced">
+                                <div class="radio-label">💪 Experimentado</div>
+                                <div class="radio-description">He seguido dietas antes y conozco cómo responde mi cuerpo. Puedo hacer cambios más rápidos.</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 20px; padding: 15px; background: var(--surface-color); border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted);">
+                            <strong>¿Por qué importa?</strong><br>
+                            • <strong>Principiantes:</strong> Empezaremos con cambios pequeños (+/-150 kcal) para que tu cuerpo se adapte sin estrés.<br>
+                            • <strong>Experimentados:</strong> Aplicaremos cambios más directos (+/-300 kcal) para resultados más rápidos.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PASO 5: Preferencias de Cocina y Suplementación -->
+                <div class="onboarding-step" data-step="5">
+                    <h2 class="step-title">Preferencias de Cocina</h2>
+                    <p class="step-subtitle">Personaliza tu plan según tu estilo de vida</p>
+
+                    <div class="form-group">
+                        <label>¿Cuánto tiempo tienes al día para cocinar?</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="cooking-time" id="cooking-quick" value="quick" required>
+                                <label for="cooking-quick">
+                                    <div class="radio-label">⚡ Rápido (10-15 min)</div>
+                                    <div class="radio-description">Recetas sencillas y express</div>
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="cooking-time" id="cooking-moderate" value="moderate">
+                                <label for="cooking-moderate">
+                                    <div class="radio-label">🍳 Moderado (20-30 min)</div>
+                                    <div class="radio-description">Balance entre rapidez y variedad</div>
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="cooking-time" id="cooking-elaborate" value="elaborate">
+                                <label for="cooking-elaborate">
+                                    <div class="radio-label">👨‍🍳 Elaborado (30-45 min)</div>
+                                    <div class="radio-description">Recetas más complejas y variadas</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 40px;">
+                        <label>¿Tienes Airfryer (Freidora de Aire)?</label>
+                        <p style="font-size: 0.9rem; color: var(--text-color); opacity: 0.8; margin-bottom: 15px;">
+                            ℹ️ Si tienes airfryer, añadiremos recetas específicas adaptadas a este aparato
+                        </p>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" name="has-airfryer" id="airfryer-yes" value="yes" required>
+                                <label for="airfryer-yes">
+                                    <div class="radio-label">✅ Sí, tengo airfryer</div>
+                                    <div class="radio-description">Incluir recetas para freidora de aire</div>
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" name="has-airfryer" id="airfryer-no" value="no">
+                                <label for="airfryer-no">
+                                    <div class="radio-label">❌ No tengo airfryer</div>
+                                    <div class="radio-description">Usar solo recetas tradicionales</div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 40px;">
+                        <label>Suplementación Deportiva (Opcional)</label>
+                        <p style="font-size: 0.9rem; color: var(--text-color); opacity: 0.8; margin-bottom: 15px;">
+                            ℹ️ La suplementación NO es obligatoria. Selecciona solo si ya los usas o te interesa información al respecto.
+                        </p>
+                        
+                        <div class="checkbox-group" id="supplements-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-protein" value="protein">
+                                <label for="supplement-protein">
+                                    <span>💪 Proteína Whey</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-protein" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Complemento para alcanzar tu objetivo de proteína diaria (1.6-2g/kg). Ideal post-entrenamiento para recuperación muscular.
+                                <br><strong>Cuándo tomarla:</strong> Después de entrenar o como merienda.
+                                <br><strong>Dosis:</strong> 25-30g (1 scoop) al día.
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-creatine" value="creatine">
+                                <label for="supplement-creatine">
+                                    <span>⚡ Creatina Monohidrato</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-creatine" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Mejora fuerza, potencia y recuperación. Uno de los suplementos más estudiados y efectivos.
+                                <br><strong>Cuándo tomarla:</strong> Cualquier momento del día (constancia > timing).
+                                <br><strong>Dosis:</strong> 5g al día (mantenimiento).
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-omega3" value="omega3">
+                                <label for="supplement-omega3">
+                                    <span>🐟 Omega-3 (EPA/DHA)</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-omega3" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Salud cardiovascular, reducción de inflamación, función cerebral.
+                                <br><strong>Cuándo tomarlo:</strong> Con comidas que contengan grasas.
+                                <br><strong>Dosis:</strong> 1-2g de EPA+DHA al día.
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-vitamin-d" value="vitamin-d">
+                                <label for="supplement-vitamin-d">
+                                    <span>Vitamina D3</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-vitamin-d" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Salud ósea, sistema inmune, función muscular. Muchas personas tienen déficit.
+                                <br><strong>Cuándo tomarla:</strong> Con comidas que contengan grasas.
+                                <br><strong>Dosis:</strong> 2000-4000 UI al día (ajustar según análisis).
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-magnesium" value="magnesium">
+                                <label for="supplement-magnesium">
+                                    <span>🧘 Magnesio</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-magnesium" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Relajación muscular, mejor sueño, reducción de calambres, salud cardiovascular.
+                                <br><strong>Cuándo tomarlo:</strong> Por la noche antes de dormir.
+                                <br><strong>Dosis:</strong> 200-400mg de magnesio elemental (glicinato o bisglicinato).
+                            </div>
+
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="supplement-caffeine" value="caffeine">
+                                <label for="supplement-caffeine">
+                                    <span>☕ Cafeína</span>
+                                </label>
+                            </div>
+                            <div class="supplement-info" id="info-caffeine" style="display: none; margin-left: 30px; padding: 10px; background: var(--accent-color); border-radius: 8px; font-size: 0.85rem; margin-bottom: 10px;">
+                                <strong>Para qué sirve:</strong> Energía, enfoque mental, mejora rendimiento físico.
+                                <br><strong>Cuándo tomarla:</strong> 30-60 min antes de entrenar o por la mañana.
+                                <br><strong>Dosis:</strong> 100-200mg (1-2 cafés aproximadamente).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 6: Alergenos y Restricciones -->
+                <div class="onboarding-step" data-step="6">
+                    <h2 class="step-title">Alergenos y Restricciones</h2>
+                    <p class="step-subtitle">Selecciona todos los que apliquen</p>
+
+                    <div class="form-group">
+                        <label>Alergenos</label>
+                        <div class="checkbox-group" id="allergens-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-gluten" value="gluten">
+                                <label for="allergen-gluten">
+                                    <span>Gluten</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-lactose" value="lactose">
+                                <label for="allergen-lactose">
+                                    <span>Lactosa</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-nuts" value="nuts">
+                                <label for="allergen-nuts">
+                                    <span>Frutos Secos</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-soy" value="soy">
+                                <label for="allergen-soy">
+                                    <span>Soja</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-eggs" value="eggs">
+                                <label for="allergen-eggs">
+                                    <span>Huevos</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-fish" value="fish">
+                                <label for="allergen-fish">
+                                    <span>Pescado</span>
+                                </label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="allergen-shellfish" value="shellfish">
+                                <label for="allergen-shellfish">
+                                    <span>Mariscos</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="other-allergens">Otros alergenos (separa con comas)</label>
+                        <input type="text" id="other-allergens" class="form-input" placeholder="Ejemplo: sulfitos, mostaza, apio">
+                    </div>
+
+                    <div class="form-group" style="margin-top: 30px;">
+                        <label for="disliked-foods">Alimentos que NO te gustan (separa con comas)</label>
+                        <input type="text" id="disliked-foods" class="form-input" placeholder="Ejemplo: brócoli, espinacas, pescado">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="preferred-foods">Alimentos FAVORITOS (separa con comas)</label>
+                        <input type="text" id="preferred-foods" class="form-input" placeholder="Ejemplo: pollo, arroz, aguacate">
+                    </div>
+                </div>
+
+                <!-- PASO 7: Resumen y Confirmación -->
+                <div class="onboarding-step" data-step="7">
+                    <h2 class="step-title">¡Todo Listo!</h2>
+                    <p class="step-subtitle">Revisa tu información antes de comenzar</p>
+
+                    <div id="summary-content" class="summary-grid">
+                        <!-- El resumen se generará dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Botones de navegación -->
+                <div class="onboarding-actions">
+                    <button type="button" class="btn-onboarding btn-secondary" id="btn-prev" style="display: none;">
+                        ← Anterior
+                    </button>
+                    <button type="button" class="btn-onboarding btn-primary" id="btn-next">
+                        Siguiente →
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== VISTA PRINCIPAL DEL DASHBOARD ===== -->
+    <div id="dashboard-view">
+    <header>
+        <div class="header-content">
+            <span class="app-title">SuitoFocus</span>
+            <div id="main-clock" class="clock">12:00:00</div>
+            <div class="header-right-buttons">
+                <button id="switch-user-btn" class="header-button user-header-btn" title="Cambiar Usuario" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </button>
+                <button id="dashboard-settings-btn" class="header-button settings-header-btn" title="Configuración">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"></path>
+                    </svg>
+                </button>
+                <button id="focus-mode-btn" class="header-button">Modo Focus</button>
+            </div>
+        </div>
+    </header>        <main>
+            <!-- Overlay para widgets expandidos -->
+            <div id="widget-overlay" class="widget-overlay"></div>
+            
+            <!-- Sección inicial visible al cargar -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <!-- Grid dinámico que crece con los widgets (inicia 3x1) -->
+                    <div id="widget-grid" class="widget-grid">
+                        <!-- Los slots se generan dinámicamente en JS -->
+                    </div>
+
+                    <!-- Botón discreto para añadir widgets -->
+                    <div id="create-widgets-section" class="create-widgets">
+                        <button id="add-widget-btn" class="add-widget-btn-discrete">
+                            <span>+</span>
+                            <span class="btn-text">Añadir Widget</span>
+                        </button>
+                        <div id="widget-menu" class="widget-menu" style="display: none;">
+                            <button onclick="createWidget('pills')" class="widget-menu-item">Pastillas</button>
+                            <button onclick="createWidget('todo')" class="widget-menu-item">Tareas</button>
+                            <button onclick="createWidget('notes')" class="widget-menu-item">Notas</button>
+                            <button onclick="createWidget('habit')" class="widget-menu-item">Hábitos</button>
+                        </div>
+                    </div>
+
+                    <!-- Contenedor de widgets disponibles (fuera del grid) -->
+                    <div id="widgets-container" style="display: none;">
+                        <!-- Plan del día -->
+                        <div id="today-panel" class="widget-item-draggable size-1" draggable="true" data-widget-type="today-plan">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Plan para Hoy</h2>
+                            </div>
+                            <div class="today-plan-content">
+                                <div class="progress-container">
+                                    <div class="progress-bar">
+                                        <div id="daily-progress" class="progress-fill"></div>
+                                    </div>
+                                    <p class="progress-text"><span id="completed-count">0</span> de <span id="total-count">4</span> comidas completadas (<span id="progress-percent">0</span>%)</p>
+                                </div>
+                                <div id="today-meals">
+                                    <!-- Contenido generado por JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contador de agua -->
+                        <div id="water-tracker" class="widget-item-draggable size-1" draggable="true" data-widget-type="water-tracker">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Contador de Agua</h2>
+                            </div>
+                            <div class="water-tracker-content">
+                                <div class="water-bottles-display" id="bottles-container">
+                                    <!-- Botellas generadas dinámicamente -->
+                                </div>
+                                <p class="water-stats">
+                                    <span id="water-progress">0</span> / <span id="water-goal">2500</span> ml
+                                    (<span id="bottles-consumed">0</span>/<span id="total-bottles">5</span> botellas)
+                                </p>
+                                <div class="water-controls">
+                                    <label for="bottle-size">Tamaño Botella (ml):</label>
+                                    <input type="number" id="bottle-size" value="500" min="100" max="1000" step="50">
+                                    <button id="add-water-btn" class="water-button">Añadir Botella</button>
+                                    <button id="reset-water-btn" class="water-button secondary">Reiniciar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pastillas -->
+                        <div id="pills-widget" class="widget-item-draggable size-1" draggable="true" data-widget-type="pills">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Pastillas</h2>
+                                <div class="widget-controls">
+                                    <button class="widget-delete-btn" onclick="deleteWidget('pills')">×</button>
+                                </div>
+                            </div>
+                            <div id="pills-list" class="widget-content">
+                                <!-- Contenido generado por JS -->
+                            </div>
+                            <div class="widget-add-inline">
+                                <input type="text" id="pill-name-input" placeholder="Nombre" class="widget-input-small" style="flex: 1;">
+                                <input type="time" id="pill-time-input" class="widget-input-small" style="width: 90px;">
+                                <button id="add-pill-btn" class="widget-add-btn-small">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Tareas -->
+                        <div id="todo-widget" class="widget-item-draggable size-1" draggable="true" data-widget-type="todo">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Tareas</h2>
+                                <div class="widget-controls">
+                                    <button class="widget-delete-btn" onclick="deleteWidget('todo')">×</button>
+                                </div>
+                            </div>
+                            <div id="todo-list" class="widget-content">
+                                <!-- Contenido generado por JS -->
+                            </div>
+                            <div class="widget-add-inline">
+                                <input type="text" id="todo-input" placeholder="Nueva tarea" class="widget-input-inline">
+                                <button id="add-todo-btn" class="widget-add-btn-small">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Notas -->
+                        <div id="notes-widget" class="widget-item-draggable size-1" draggable="true" data-widget-type="notes">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Notas</h2>
+                                <div class="widget-controls">
+                                    <button class="widget-delete-btn" onclick="deleteWidget('notes')">×</button>
+                                </div>
+                            </div>
+                            <textarea id="notes-content" class="widget-textarea" placeholder="Escribe tus notas aquí..."></textarea>
+                        </div>
+
+                        <!-- Hábitos -->
+                        <div id="habit-widget" class="widget-item-draggable size-1" draggable="true" data-widget-type="habit">
+                            <div class="widget-resize-handle"></div>
+                            <div class="widget-header">
+                                <h2>Hábitos</h2>
+                                <div class="widget-controls">
+                                    <button class="widget-delete-btn" onclick="deleteWidget('habit')">×</button>
+                                </div>
+                            </div>
+                            <div id="habit-list" class="widget-content">
+                                <!-- Contenido generado por JS -->
+                            </div>
+                            <div class="widget-add-inline">
+                                <input type="text" id="habit-input" placeholder="Nuevo hábito" class="widget-input-inline">
+                                <button id="add-habit-btn" class="widget-add-btn-small">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="scroll-down-indicator">↓</div>
+            </section>
+
+            <!-- Secciones visibles al hacer scroll -->
+            <div class="scrolled-content">
+                <section class="diet-plan-container content-section">
+                    <div class="section-header">
+                        <h2>Plan Nutricional Semanal</h2>
+                        <div class="section-header-buttons">
+                            <button id="regenerate-diet-btn" class="regenerate-diet-btn" title="Generar nuevas recetas">
+                                Renovar Recetas
+                            </button>
+                            <button id="generate-shopping-list-btn" class="shopping-list-btn">
+                                Lista de Compra
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tabs">
+                        <button class="tab-link active" data-week="Week1">Semana 1</button>
+                        <button class="tab-link" data-week="Week2">Semana 2</button>
+                        <button class="tab-link" data-week="Week3">Semana 3</button>
+                        <button class="tab-link" data-week="Week4">Semana 4</button>
+                    </div>
+                    <div id="Week1" class="tab-content"></div>
+                    <div id="Week2" class="tab-content hidden"></div>
+                    <div id="Week3" class="tab-content hidden"></div>
+                    <div id="Week4" class="tab-content hidden"></div>
+                </section>
+                
+                <section class="offers-section content-section">
+                    <h2>Alimentos Recomendados y Supermercados (Málaga)</h2>
+                    <p>Guía completa de productos saludables con mejor relación calidad-precio en supermercados locales.</p>
+                    
+                    <div class="supermarket-links">
+                        <h3>Enlaces a Supermercados Online:</h3>
+                        <div class="market-grid">
+                            <a href="https://www.mercadona.es" target="_blank" class="market-link">
+                                <span class="market-icon">🏪</span>
+                                <span>Mercadona</span>
+                            </a>
+                            <a href="https://www.lidl.es" target="_blank" class="market-link">
+                                <span class="market-icon">&#128722;</span>
+                                <span>Lidl</span>
+                            </a>
+                            <a href="https://www.aldi.es" target="_blank" class="market-link">
+                                <span class="market-icon">&#128722;</span>
+                                <span>Aldi</span>
+                            </a>
+                            <a href="https://www.carrefour.es" target="_blank" class="market-link">
+                                <span class="market-icon">&#128722;</span>
+                                <span>Carrefour</span>
+                            </a>
+                            <a href="https://www.dia.es" target="_blank" class="market-link">
+                                <span class="market-icon">🏪</span>
+                                <span>DIA</span>
+                            </a>
+                            <a href="https://www.ahorramas.com" target="_blank" class="market-link">
+                                <span class="market-icon">💰</span>
+                                <span>Ahorramas</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <table class="foods-table">
+                        <thead>
+                            <tr>
+                                <th>Categoría</th>
+                                <th>Alimentos Específicos</th>
+                                <th>Cantidad Recomendada</th>
+                                <th>Mejor en</th>
+                                <th>Precio Aprox.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Proteínas</strong></td>
+                                <td>
+                                    • Pechuga de pollo (bandeja 1kg)<br>
+                                    • Huevos (docena L)<br>
+                                    • Merluza congelada (800g)<br>
+                                    • Lentejas secas (500g)<br>
+                                    • Garbanzos en bote (400g)
+                                </td>
+                                <td>
+                                    1-2 bandejas/sem<br>
+                                    1-2 docenas/sem<br>
+                                    1-2 bolsas/sem<br>
+                                    2-3 paquetes/mes<br>
+                                    3-4 botes/sem
+                                </td>
+                                <td>Lidl, Aldi<br>Mercadona<br>Lidl, Aldi<br>Mercadona<br>Todos</td>
+                                <td>€4-5/kg<br>€2-2.5<br>€3-4<br>€1-1.5<br>€0.8-1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Carbohidratos</strong></td>
+                                <td>
+                                    • Boniato (a granel)<br>
+                                    • Patatas (malla 3kg)<br>
+                                    • Arroz integral (1kg)<br>
+                                    • Avena integral (500g)<br>
+                                    • Pan integral molde
+                                </td>
+                                <td>
+                                    1-2kg/sem<br>
+                                    1 malla/sem<br>
+                                    1 paquete/mes<br>
+                                    2-3 paquetes/mes<br>
+                                    1-2 panes/sem
+                                </td>
+                                <td>Fruterías<br>Aldi, Lidl<br>Mercadona<br>Lidl, Aldi<br>Mercadona</td>
+                                <td>€1.5-2/kg<br>€2-3<br>€2-2.5<br>€1-1.5<br>€1-1.5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verduras</strong></td>
+                                <td>
+                                    • Brócoli fresco (500g)<br>
+                                    • Pimientos (1kg)<br>
+                                    • Calabacín (1kg)<br>
+                                    • Cebolla (malla 2kg)<br>
+                                    • Tomate (1kg)<br>
+                                    • Espinacas congeladas (450g)
+                                </td>
+                                <td>
+                                    2-3 unidades/sem<br>
+                                    1kg/sem<br>
+                                    1-2kg/sem<br>
+                                    1 malla/2 sem<br>
+                                    1-2kg/sem<br>
+                                    2-3 bolsas/sem
+                                </td>
+                                <td>Fruterías<br>Fruterías<br>Lidl, Aldi<br>Todos<br>Fruterías<br>Mercadona</td>
+                                <td>€1.5-2<br>€1.5-2.5/kg<br>€1-1.5/kg<br>€1.5-2<br>€1.5-2/kg<br>€1-1.5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frutas</strong></td>
+                                <td>
+                                    • Plátanos (1kg)<br>
+                                    • Manzanas (1kg)<br>
+                                    • Frutos rojos congelados (300g)<br>
+                                    • Naranjas (malla 2kg)<br>
+                                    • Kiwis (bolsa 1kg)
+                                </td>
+                                <td>
+                                    1-2kg/sem<br>
+                                    1kg/sem<br>
+                                    1-2 bolsas/sem<br>
+                                    1 malla/sem<br>
+                                    1 bolsa/sem
+                                </td>
+                                <td>Fruterías<br>Lidl<br>Mercadona<br>Fruterías<br>Aldi, Lidl</td>
+                                <td>€1.5-2/kg<br>€1.5-2/kg<br>€2-2.5<br>€1.5-2<br>€2-3</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lácteos</strong></td>
+                                <td>
+                                    • Yogur Alpro (pack 4x125g)<br>
+                                    • Bebida de avena (1L)<br>
+                                    • Queso fresco batido 0% (500g)<br>
+                                    • Leche desnatada (1L)
+                                </td>
+                                <td>
+                                    4-5 packs/sem<br>
+                                    2-3 briks/sem<br>
+                                    1-2 tarrinas/sem<br>
+                                    2-3 briks/sem
+                                </td>
+                                <td>Mercadona<br>Lidl, Aldi<br>Todos<br>Todos</td>
+                                <td>€2-2.5<br>€1-1.5<br>€1.5-2<br>€0.8-1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Snacks Saludables</strong></td>
+                                <td>
+                                    • Nueces sin sal (200g)<br>
+                                    • Almendras crudas (200g)<br>
+                                    • Hummus (200g)<br>
+                                    • Anacardos (150g)<br>
+                                    • Edamame congelado (300g)
+                                </td>
+                                <td>
+                                    1 bolsa/sem<br>
+                                    1 bolsa/sem<br>
+                                    2-3 tarrinas/sem<br>
+                                    1 bolsa/2 sem<br>
+                                    1-2 bolsas/sem
+                                </td>
+                                <td>Lidl, Aldi<br>Aldi, Lidl<br>Mercadona<br>Lidl<br>Mercadona</td>
+                                <td>€2-3<br>€2-3<br>€1.5-2<br>€2.5-3<br>€1.5-2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Básicos</strong></td>
+                                <td>
+                                    • Aceite de oliva virgen extra (1L)<br>
+                                    • Especias variadas<br>
+                                    • Ajo (malla 250g)<br>
+                                    • Limones (malla 500g)<br>
+                                    • Semillas de chía (200g)
+                                </td>
+                                <td>
+                                    1 botella/mes<br>
+                                    Según necesidad<br>
+                                    1 malla/sem<br>
+                                    1 malla/sem<br>
+                                    1 bolsa/mes
+                                </td>
+                                <td>Mercadona<br>Todos<br>Fruterías<br>Fruterías<br>Lidl, Aldi</td>
+                                <td>€4-6<br>€1-2<br>€0.8-1<br>€1-1.5<br>€2-3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="shopping-tips">
+                        <h3>Consejos para Ahorrar:</h3>
+                        <ul>
+                            <li>Compra en <strong>fruterías locales por la tarde</strong> para mejores precios</li>
+                            <li>Los <strong>martes y jueves</strong> suelen tener más ofertas en Lidl y Aldi</li>
+                            <li>Opta por <strong>congelados</strong> en verduras y pescado para ahorrar sin perder nutrientes</li>
+                            <li>Las <strong>marcas blancas</strong> tienen igual calidad a mejor precio</li>
+                            <li>Descarga las apps de los supermercados para <strong>cupones exclusivos</strong></li>
+                            <li>Compra en <strong>grandes cantidades</strong> productos no perecederos cuando estén en oferta</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- ===== VISTA SEPARADA PARA EL MODO FOCUS ===== -->
+    <div id="focus-mode-view" class="hidden">
+        <!-- Barra superior con botones -->
+        <div class="focus-top-bar">
+            <button id="back-to-dashboard-btn" class="focus-top-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                </svg>
+                <span>Panel</span>
+            </button>
+            
+            <div class="focus-top-right">
+                <button id="toggle-widgets-selector-btn" class="focus-top-btn" title="Seleccionar widgets">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    <span>Widgets</span>
+                </button>
+                <button id="toggle-fullscreen-btn" class="focus-top-btn" title="Pantalla completa">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+                    </svg>
+                </button>
+                <button id="toggle-focus-settings-btn" class="focus-top-btn" title="Ajustes">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m7.08 7.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m7.08-7.08l4.24-4.24"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Panel selector de widgets -->
+        <div id="widgets-selector-panel" class="widgets-selector-panel hidden">
+            <h3>Seleccionar Widgets</h3>
+            <div class="widgets-selector-options">
+                <label class="widget-selector-item">
+                    <input type="checkbox" id="show-pills-widget" data-widget="pills">
+                    <span>Pastillas Recordatorio</span>
+                </label>
+                <label class="widget-selector-item">
+                    <input type="checkbox" id="show-todos-widget" data-widget="todos">
+                    <span>Lista de Tareas</span>
+                </label>
+                <label class="widget-selector-item">
+                    <input type="checkbox" id="show-habits-widget" data-widget="habits">
+                    <span>Hábitos Diarios</span>
+                </label>
+                <label class="widget-selector-item">
+                    <input type="checkbox" id="show-notes-widget" data-widget="notes">
+                    <span>Notas Rápidas</span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="focus-grid">
+            <!-- Columna Izquierda: Reloj y Widgets Activos -->
+            <div class="focus-left">
+                <div class="focus-clock-display" id="focus-clock">12:00:00</div>
+                <div class="active-widgets-panel">
+                    <div id="active-widgets-list" class="active-widgets-list">
+                        <div class="empty-widgets-placeholder">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+                                <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+                                <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+                                <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+                            </svg>
+                            <p>Selecciona widgets para mostrar</p>
+                            <small>Haz clic en el botón "Widgets" arriba</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna Central: Vela -->
+            <div class="focus-center">
+                <div class="candle-container">
+                    <div class="flame"></div>
+                    <div class="wick"></div>
+                    <div class="wax"></div>
+                </div>
+            </div>
+            
+            <!-- Columna Derecha: Temporizador -->
+            <div class="focus-right">
+                <div id="timer-display">25:00</div>
+                <div class="timer-buttons">
+                    <button id="start-timer-btn" class="focus-timer-btn">Iniciar</button>
+                    <button id="reset-timer-btn" class="focus-timer-btn">Reiniciar</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Panel de ajustes completo -->
+        <div id="focus-settings-panel" class="hidden">
+            <h3>Ajustes y Configuración</h3>
+            <div class="focus-settings-content">
+                
+                <!-- Elemento Central de Meditación -->
+                <div class="settings-section">
+                    <h4>Elemento de Meditación</h4>
+                    <div class="meditation-element-selector">
+                        <label class="element-option">
+                            <input type="radio" name="meditation-element" value="candle" checked>
+                            <span class="element-icon">🕯️</span>
+                            <span class="element-name">Vela</span>
+                        </label>
+                        <label class="element-option">
+                            <input type="radio" name="meditation-element" value="waterfall">
+                            <span class="element-icon">💧</span>
+                            <span class="element-name">Cascada</span>
+                        </label>
+                        <label class="element-option">
+                            <input type="radio" name="meditation-element" value="bonsai">
+                            <span class="element-icon">🌳</span>
+                            <span class="element-name">Bonsái</span>
+                        </label>
+                        <label class="element-option">
+                            <input type="radio" name="meditation-element" value="lotus">
+                            <span class="element-icon">🪷</span>
+                            <span class="element-name">Loto</span>
+                        </label>
+                        <label class="element-option">
+                            <input type="radio" name="meditation-element" value="zen">
+                            <span class="element-icon">⛩️</span>
+                            <span class="element-name">Jardín Zen</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Temporizador -->
+                <div class="settings-section">
+                    <h4>Temporizador</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-minutes="15">15 min</button>
+                        <button class="preset-btn active" data-minutes="25">25 min</button>
+                        <button class="preset-btn" data-minutes="45">45 min</button>
+                        <button class="preset-btn" data-minutes="60">60 min</button>
+                    </div>
+                    <div class="custom-timer">
+                        <input type="number" id="custom-minutes" min="1" max="180" placeholder="Minutos personalizados">
+                        <button id="set-custom-timer">Aplicar</button>
+                    </div>
+                </div>
+
+                <!-- Tema y Apariencia -->
+                <div class="settings-section">
+                    <h4>Tema y Apariencia</h4>
+                    <div class="control-group">
+                        <label for="theme-select-focus">Tema Visual</label>
+                        <select id="theme-select-focus">
+                            <option value="autumn">Otoño Suave</option>
+                            <option value="forest">Bosque Sereno</option>
+                            <option value="ocean">Océano Calmo</option>
+                            <option value="dark">Noche Estrellada</option>
+                            <option value="graffiti">Graffiti Urbano</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="brightness-slider-focus">Oscuridad: <span id="brightness-value-focus">0%</span></label>
+                        <input type="range" id="brightness-slider-focus" min="0" max="70" value="0">
+                    </div>
+                    <div class="control-group">
+                        <label for="font-size-slider-focus">Tamaño de Texto: <span id="font-size-value-focus">100%</span></label>
+                        <input type="range" id="font-size-slider-focus" min="80" max="130" value="100">
+                    </div>
+                </div>
+
+                <!-- Sonido Ambiental -->
+                <div class="settings-section">
+                    <h4>Sonido Ambiental</h4>
+                    <div class="control-group">
+                        <label for="volume-slider-focus">Volumen: <span id="volume-value-focus">50%</span></label>
+                        <input type="range" id="volume-slider-focus" min="0" max="1" step="0.05" value="0.5">
+                    </div>
+                    <div class="sound-options">
+                        <button class="sound-btn" data-sound="forest">Bosque</button>
+                        <button class="sound-btn" data-sound="ocean">Océano</button>
+                        <button class="sound-btn active" data-sound="none">Silencio</button>
+                    </div>
+                </div>
+
+                <!-- Contador de Agua -->
+                <div class="settings-section">
+                    <h4>Hidratación</h4>
+                    <div class="water-tracker-compact">
+                        <p><span id="focus-water-progress">0</span> ml consumidos</p>
+                        <div class="water-buttons">
+                            <button id="focus-add-water-250" class="water-btn-compact">+250ml</button>
+                            <button id="focus-add-water-500" class="water-btn-compact">+500ml</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notificaciones -->
+                <div class="settings-section">
+                    <h4>Notificaciones</h4>
+                    <div class="control-group">
+                        <label class="toggle-option">
+                            <input type="checkbox" id="enable-timer-notification" checked>
+                            <span>Notificar al finalizar temporizador</span>
+                        </label>
+                        <label class="toggle-option">
+                            <input type="checkbox" id="enable-water-reminder">
+                            <span>Recordatorio de hidratación (cada hora)</span>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PANEL DE CONFIGURACIÓN UNIFICADO (DASHBOARD Y FOCUS) ===== -->
+    <div id="unified-settings-panel" class="hidden">
+        <h3>Configuración General</h3>
+        <div class="settings-tabs">
+            <button class="settings-tab active" data-tab="appearance">Apariencia</button>
+            <button class="settings-tab" data-tab="profile">Perfil</button>
+            <button class="settings-tab" data-tab="notifications">Notificaciones</button>
+            <button class="settings-tab" data-tab="data">Datos</button>
+        </div>
+
+        <!-- Tab: Apariencia -->
+        <div class="settings-tab-content active" data-content="appearance">
+            <!-- Elemento de Meditación -->
+            <div class="control-group">
+                <label>Elemento de Meditación</label>
+                <div class="meditation-element-selector">
+                    <label class="element-option">
+                        <input type="radio" name="meditation-element" value="candle" checked>
+                        <span class="element-icon">🕯️</span>
+                        <span class="element-name">Vela</span>
+                    </label>
+                    <label class="element-option">
+                        <input type="radio" name="meditation-element" value="waterfall">
+                        <span class="element-icon">💧</span>
+                        <span class="element-name">Cascada</span>
+                    </label>
+                    <label class="element-option">
+                        <input type="radio" name="meditation-element" value="bonsai">
+                        <span class="element-icon">🌳</span>
+                        <span class="element-name">Bonsái</span>
+                    </label>
+                    <label class="element-option">
+                        <input type="radio" name="meditation-element" value="lotus">
+                        <span class="element-icon">🪷</span>
+                        <span class="element-name">Loto</span>
+                    </label>
+                    <label class="element-option">
+                        <input type="radio" name="meditation-element" value="zen">
+                        <span class="element-icon">⛩️</span>
+                        <span class="element-name">Jardín Zen</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="theme-select">Tema Visual</label>
+                <select id="theme-select">
+                    <option value="autumn">Otoño Suave</option>
+                    <option value="forest">Bosque Sereno</option>
+                    <option value="ocean">Océano Calmo</option>
+                    <option value="dark">Noche Estrellada</option>
+                    <option value="graffiti">Graffiti Urbano</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label for="brightness-slider">Oscuridad: <span id="brightness-value">0%</span></label>
+                <input type="range" id="brightness-slider" min="0" max="70" value="0">
+            </div>
+            <div class="control-group">
+                <label for="font-size-slider">Tamaño de Texto: <span id="font-size-value">100%</span></label>
+                <input type="range" id="font-size-slider" min="80" max="130" value="100">
+            </div>
+            <div class="control-group">
+                <label for="volume-slider">Volumen Ambiental: <span id="volume-value">50%</span></label>
+                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+            </div>
+        </div>
+
+        <!-- Tab: Perfil -->
+        <div class="settings-tab-content" data-content="profile">
+            <div class="profile-section">
+                <h4>Información Personal</h4>
+                <div class="form-group">
+                    <label for="profile-weight">Peso actual (kg)</label>
+                    <input type="number" id="profile-weight" class="form-input" min="30" max="200" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="profile-activity">Nivel de Actividad</label>
+                    <select id="profile-activity" class="form-select">
+                        <option value="sedentary">Sedentario (poco o ningún ejercicio)</option>
+                        <option value="light">Ligero (ejercicio 1-2 días/semana)</option>
+                        <option value="moderate">Moderado (ejercicio 3-4 días/semana)</option>
+                        <option value="active">Activo (ejercicio 5-6 días/semana)</option>
+                        <option value="very_active">Muy activo (ejercicio diario intenso)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="profile-goal">Objetivo</label>
+                    <select id="profile-goal" class="form-select">
+                        <option value="lose">Perder peso</option>
+                        <option value="maintain">Mantener peso</option>
+                        <option value="gain">Ganar peso</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="profile-section">
+                <h4>Preferencias Alimentarias</h4>
+                <div class="form-group">
+                    <label for="profile-diet">Tipo de Dieta</label>
+                    <select id="profile-diet" class="form-select">
+                        <option value="balanced">Equilibrada</option>
+                        <option value="high_protein">Alta en proteína</option>
+                        <option value="low_carb">Baja en carbohidratos</option>
+                        <option value="vegetarian">Vegetariana</option>
+                        <option value="vegan">Vegana</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Alérgenos</label>
+                    <div class="checkbox-group" id="profile-allergens">
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="gluten">
+                            <span>Gluten</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="lactose">
+                            <span>Lactosa</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="nuts">
+                            <span>Frutos secos</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="fish">
+                            <span>Pescado</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="shellfish">
+                            <span>Mariscos</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="eggs">
+                            <span>Huevos</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="soy">
+                            <span>Soja</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Suplementación</label>
+                    <div class="checkbox-group" id="profile-supplements">
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="protein">
+                            <span>Proteína</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="creatine">
+                            <span>Creatina</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="omega3">
+                            <span>Omega-3</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" value="vitamins">
+                            <span>Vitaminas</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="profile-airfryer">
+                        <span>Tengo freidora de aire (Airfryer)</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="profile-actions">
+                <button id="save-profile-btn" class="btn-primary">Guardar Cambios</button>
+                <button id="regenerate-plan-btn" class="btn-secondary">Regenerar Plan con Nuevos Datos</button>
+            </div>
+        </div>
+
+        <!-- Tab: Notificaciones -->
+        <div class="settings-tab-content" data-content="notifications">
+            <div class="control-group">
+                <label class="toggle-option">
+                    <input type="checkbox" id="enable-daily-reminder" checked>
+                    <span>Recordatorio diario de plan alimenticio</span>
+                </label>
+                <label class="toggle-option">
+                    <input type="checkbox" id="enable-water-notifications" checked>
+                    <span>Notificaciones de hidratación</span>
+                </label>
+                <label class="toggle-option">
+                    <input type="checkbox" id="enable-pills-reminder" checked>
+                    <span>Recordatorio de pastillas</span>
+                </label>
+                <label class="toggle-option">
+                    <input type="checkbox" id="enable-sound-alerts">
+                    <span>Alertas sonoras</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Tab: Datos -->
+        <div class="settings-tab-content" data-content="data">
+            <div class="data-section">
+                <h4>Gestión de Datos</h4>
+                <p class="data-info">Exporta o elimina todos tus datos guardados</p>
+                <div class="data-buttons">
+                    <button id="export-data-btn" class="data-btn export">Exportar Datos</button>
+                    <button id="import-data-btn" class="data-btn import">Importar Datos</button>
+                    <button id="reset-data-btn" class="data-btn danger">Borrar Todos los Datos</button>
+                </div>
+                <input type="file" id="import-file-input" accept=".json" style="display: none;">
+            </div>
+            <div class="data-section">
+                <h4>Información</h4>
+                <p class="app-version">SuitoFocus v2.0</p>
+                <p class="storage-info">Almacenamiento: <span id="storage-used">0</span> KB usados</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mantener el botón original de accesibilidad oculto (legacy) -->
+    <button id="toggle-accessibility-btn" class="floating-btn" style="display: none;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M12 1v6m0 6v6m5.66-13A10 10 0 0 1 18 12a10 10 0 0 1-5.34 8.84M6.34 5A10 10 0 0 0 6 12a10 10 0 0 0 .34 2.84"></path>
+        </svg>
+    </button>
+    <div id="accessibility-panel" class="hidden">
+        <h3>Configuración</h3>
+        <div class="control-group">
+            <label for="theme-select">Tema</label>
+            <select id="theme-select">
+                <option value="">Principal (Neutral)</option>
+                <option value="forest">Bosque Natural</option>
+                <option value="ocean">Océano Profundo</option>
+                <option value="autumn">Otoño Cálido</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label>
+                <input type="checkbox" id="night-mode-toggle">
+                Modo Noche
+            </label>
+        </div>
+        <div class="control-group">
+            <label for="brightness-slider">Oscuridad: <span id="brightness-value">0%</span></label>
+            <input type="range" id="brightness-slider" min="0" max="70" value="0">
+        </div>
+        <div class="control-group">
+            <label for="volume-slider">Volumen: <span id="volume-value">50%</span></label>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+        </div>
+        <div class="control-group">
+            <label for="font-size-slider">Tamaño de Texto: <span id="font-size-value">100%</span></label>
+            <input type="range" id="font-size-slider" min="80" max="130" value="100">
+        </div>
+    </div>
+
+    <!-- Modal para lista de compra -->
+    <div id="shopping-list-modal" class="modal hidden">
+        <div class="modal-content shopping-list-content">
+            <span class="close-btn" id="close-shopping-btn">&times;</span>
+            <h2>Lista de Compra</h2>
+            
+            <div class="week-selector">
+                <label for="week-select">Selecciona la semana:</label>
+                <select id="week-select">
+                    <option value="1">Semana 1</option>
+                    <option value="2">Semana 2</option>
+                    <option value="3">Semana 3</option>
+                    <option value="4">Semana 4</option>
+                </select>
+                <button onclick="updateShoppingList()" class="update-list-btn">Actualizar Lista</button>
+            </div>
+            
+            <h3 id="shopping-week-title"></h3>
+            <p class="shopping-subtitle">Organizada por supermercado según mejor relación calidad-precio</p>
+            
+            <div id="shopping-list-container">
+                <!-- Contenido generado dinámicamente -->
+            </div>
+            
+            <div class="shopping-actions">
+                <button onclick="window.print()" class="print-btn">Imprimir Lista</button>
+                <button onclick="closeShoppingList()" class="close-shopping-btn">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para vídeos de recetas -->
+    <div id="recipe-modal" class="modal hidden">
+        <div class="modal-content recipe-modal-large">
+            <span class="close-btn">&times;</span>
+            <h3 id="modal-title">Receta</h3>
+            <p id="modal-description" class="recipe-description"></p>
+            
+            <!-- Sección de ingredientes -->
+            <div id="recipe-ingredients-section" class="recipe-section hidden">
+                <h4 class="recipe-section-header">INGREDIENTES</h4>
+                <div id="recipe-ingredients-list" class="ingredients-list">
+                    <!-- Ingredientes generados dinámicamente -->
+                </div>
+            </div>
+            
+            <!-- Sección de macronutrientes -->
+            <div id="recipe-macros-section" class="recipe-section hidden">
+                <h4 class="recipe-section-header">INFORMACIÓN NUTRICIONAL</h4>
+                <div id="recipe-macros" class="macros-grid">
+                    <!-- Macros generados dinámicamente -->
+                </div>
+            </div>
+            
+            <div class="modal-tabs">
+                <button class="modal-tab active" data-tab="steps">Pasos Detallados</button>
+                <button class="modal-tab" data-tab="video">Video Referencia</button>
+            </div>
+            <div id="steps-tab-content" class="modal-tab-content">
+                <div id="recipe-steps" class="recipe-steps-accordion">
+                    <!-- Pasos generados dinámicamente con acordeón -->
+                </div>
+            </div>
+            <div id="video-tab-content" class="modal-tab-content hidden">
+                <div class="video-container">
+                    <iframe id="youtube-video" width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedores de audio -->
+    <audio id="forest-sound" loop src="https://assets.mixkit.co/active_storage/sfx/2454/2454-preview.mp3"></audio>
+    <audio id="ocean-sound" loop src="https://assets.mixkit.co/active_storage/sfx/2393/2393-preview.mp3"></audio>
+
+    <!-- Scripts JavaScript -->
+    <!-- Core: Sistema de usuarios -->
+    <script src="js/core/user-system.js"></script>
+    
+    <!-- UI: Interfaces de usuario -->
+    <script src="js/ui/user-interface.js"></script>
+    
+    <!-- Nutrition: Sistema de cantidades estandarizadas -->
+    <script src="js/nutrition/package-standards.js"></script>
+    <script src="js/nutrition/recipes-loader.js"></script>
+    <script src="js/nutrition/meal-planner.js"></script>
+    
+    <!-- Main: Script principal -->
+    <script src="js/script.js"></script>
+    
+    <!-- Testing: Herramientas de debug y testing (solo desarrollo) -->
+    <script src="js/testing-helpers.js"></script>
+</body>
+</html>

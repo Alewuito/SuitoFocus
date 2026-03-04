@@ -1,0 +1,1056 @@
+/* --- Widgets Opcionales --- */
+
+/* Grid dinámico responsivo - crece verticalmente según widgets añadidos */
+.widget-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas para más flexibilidad */
+    grid-auto-rows: minmax(280px, auto);
+    grid-auto-flow: dense; /* Compacta automáticamente sin huecos */
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px; /* Aumentado para 4 columnas */
+    margin: 0 auto;
+    padding: 20px 20px 10px 20px;
+    position: relative;
+}
+
+/* Responsividad del grid */
+@media (max-width: 1200px) {
+    .widget-grid {
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 1000px;
+    }
+    
+    .widget-item-draggable.size-4 {
+        grid-column: span 3 !important;
+    }
+}
+
+@media (max-width: 900px) {
+    .widget-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 700px;
+    }
+    
+    .widget-item-draggable.size-3,
+    .widget-item-draggable.size-4 {
+        grid-column: span 2 !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .widget-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+    
+    .widget-item-draggable.size-1,
+    .widget-item-draggable.size-2,
+    .widget-item-draggable.size-3 {
+        grid-column: span 1 !important;
+    }
+}
+
+
+/* Slots invisibles por defecto, visibles al arrastrar */
+.grid-slot {
+    min-height: 280px;
+    border: 2px dashed transparent;
+    border-radius: 12px;
+    transition: all 0.3s;
+    position: relative;
+    background-color: transparent;
+}
+
+/* Mostrar slots al comenzar a arrastrar */
+.widget-grid.dragging-active .grid-slot {
+    border-color: rgba(0, 0, 0, 0.15);
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.grid-slot.occupied {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.grid-slot.drag-over {
+    border-color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+}
+
+.grid-slot.invalid {
+    border-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.05);
+}
+
+/* Widgets arrastrables en el grid */
+.widget-item-draggable {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    cursor: grab;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    will-change: transform, grid-column;
+}
+
+/* Handle de resize interactivo */
+.widget-resize-handle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    cursor: ew-resize !important;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.2s;
+    background: linear-gradient(90deg, transparent, var(--primary-color));
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.widget-item-draggable:hover .widget-resize-handle {
+    opacity: 0.3;
+}
+
+.widget-resize-handle:hover {
+    opacity: 0.8 !important;
+    width: 12px;
+}
+
+.widget-resize-handle.resizing {
+    opacity: 1 !important;
+    width: 15px;
+}
+
+/* Preview de tamaño durante resize */
+.widget-item-draggable.resize-preview {
+    opacity: 0.8;
+    box-shadow: 0 8px 30px var(--primary-color);
+    z-index: 100;
+}
+
+.widget-item-draggable.resize-preview-size-1 {
+    outline: 3px dashed var(--primary-color);
+    outline-offset: -3px;
+}
+
+.widget-item-draggable.resize-preview-size-2 {
+    outline: 3px dashed var(--secondary-color);
+    outline-offset: -3px;
+}
+
+.widget-item-draggable.resize-preview-size-3 {
+    outline: 3px dashed #4CAF50;
+    outline-offset: -3px;
+}
+
+/* Indicador de tamaño flotante */
+.resize-indicator {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--primary-color);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 12px;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: 10000;
+    pointer-events: none;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeInScale 0.2s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Widgets afectados por el resize */
+.widget-item-draggable.will-move {
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+/* Animación suave al cambiar de tamaño */
+.widget-item-draggable.resizing {
+    animation: resizePulse 0.4s ease-out;
+}
+
+@keyframes resizePulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+
+/* Placeholder para drag visual */
+.drag-placeholder {
+    background: rgba(0, 0, 0, 0.1);
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    min-height: 100px;
+}
+
+/* Widget arrastrable */
+.widget-item-draggable {
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: element;
+}
+
+.widget-item-draggable:active {
+    cursor: grabbing;
+}
+
+.widget-item-draggable.dragging {
+    opacity: 0.7;
+    transform: scale(1.05) rotate(2deg);
+    z-index: 1000;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    cursor: grabbing !important;
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.15s ease,
+                box-shadow 0.15s ease;
+    animation: pulse 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* Animación al soltar el widget */
+@keyframes dropIn {
+    0% {
+        transform: scale(1.05) rotate(2deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.widget-item-draggable.just-dropped {
+    animation: dropIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Indicador visual cuando se arrastra sobre otro widget */
+.widget-item-draggable.drag-over {
+    transform: scale(0.95);
+    box-shadow: inset 0 0 0 3px var(--primary-color, #2ecc71),
+                0 8px 25px rgba(46, 204, 113, 0.3);
+    transition: all 0.2s ease;
+}
+
+/* Todos los widgets ocupan 1 slot del grid por defecto */
+.widget-item-draggable {
+    min-height: 280px;
+    height: fit-content;
+    max-height: none;
+    width: 100%;
+    padding: 18px;
+    grid-column: span 1; /* Por defecto ocupa 1 columna */
+}
+
+/* Clases para tamaños personalizados */
+.widget-item-draggable.size-1 {
+    grid-column: span 1 !important;
+}
+
+.widget-item-draggable.size-2 {
+    grid-column: span 2 !important;
+}
+
+.widget-item-draggable.size-3 {
+    grid-column: span 3 !important;
+}
+
+.widget-item-draggable.size-4 {
+    grid-column: span 4 !important;
+}
+
+/* Ajustes de altura según tamaño */
+.widget-item-draggable.size-1 {
+    min-height: 280px;
+}
+
+.widget-item-draggable.size-2 {
+    min-height: 280px;
+}
+
+.widget-item-draggable.size-3 {
+    min-height: 280px;
+}
+
+.widget-item-draggable.size-4 {
+    min-height: 280px;
+}
+
+/* Responsividad de tamaños en tablets */
+@media (max-width: 900px) {
+    .widget-item-draggable.size-2 {
+        grid-column: span 2;
+    }
+}
+
+/* En móvil todos ocupan el ancho completo */
+@media (max-width: 600px) {
+    .widget-item-draggable {
+        min-height: 250px;
+    }
+}
+
+
+/* Header del widget con controles */
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+.widget-header h2 {
+    margin: 0;
+    font-size: 1.1em;
+    color: var(--primary-color);
+    font-weight: 500;
+    -webkit-user-drag: none;
+    user-drag: none;
+}
+
+.widget-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.widget-resize-btn,
+.widget-delete-btn {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.1em;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+    transition: all 0.2s;
+    opacity: 0.5;
+}
+
+.widget-resize-btn {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.widget-resize-btn:hover,
+.widget-delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.widget-delete-btn:hover {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #d32f2f;
+}
+
+/* Contenido de widgets con scroll si necesario */
+.widget-content {
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 12px;
+    padding-right: 5px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Scrollbar personalizado */
+.widget-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.widget-content::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.widget-content::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+    opacity: 0.5;
+}
+
+.widget-content::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+.widget-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 6px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    transition: all 0.3s;
+    cursor: pointer;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.widget-item:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    transform: translateX(3px);
+}
+
+.widget-item.completed {
+    opacity: 0.5;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.widget-item.completed:hover {
+    transform: none;
+}
+
+.widget-item-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.widget-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.widget-item-text {
+    font-size: 0.95em;
+    color: var(--text-color);
+    text-decoration: none;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.widget-item.completed .widget-item-text {
+    text-decoration: line-through;
+}
+
+.widget-item-time {
+    font-size: 0.85em;
+    color: var(--primary-color);
+    font-weight: 500;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 2px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.widget-item-actions {
+    display: flex;
+    gap: 5px;
+    flex-shrink: 0;
+}
+
+.widget-item-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 4px;
+    color: #d32f2f;
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.widget-item:hover .widget-item-btn {
+    opacity: 0.6;
+}
+
+.widget-item-btn:hover {
+    opacity: 1 !important;
+    transform: scale(1.2);
+}
+
+/* Inputs inline más compactos y responsive */
+.widget-add-inline {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.widget-input-small {
+    padding: 8px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    font-size: 0.9em;
+    background-color: white;
+    color: var(--text-color);
+    transition: border-color 0.2s;
+    min-width: 0;
+}
+
+.widget-input-small:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.widget-input-inline {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    font-size: 0.9em;
+    background-color: white;
+    color: var(--text-color);
+    min-width: 0;
+}
+
+.widget-input-inline:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.widget-add-btn-small {
+    width: 32px;
+    height: 32px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.widget-add-btn-small:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.widget-add-btn-small:active {
+    transform: scale(0.95);
+}
+
+/* Textarea para notas */
+.widget-textarea {
+    width: 100%;
+    min-height: 150px;
+    max-height: 300px;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    font-size: 0.95em;
+    font-family: inherit;
+    background-color: white;
+    color: var(--text-color);
+    resize: vertical;
+}
+
+.widget-textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Notificaciones discretas */
+#notification-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+
+.notification {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-left: 4px solid var(--primary-color);
+    min-width: 280px;
+    max-width: 400px;
+    animation: slideInRight 0.3s ease-out;
+    pointer-events: all;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.notification.error {
+    border-left-color: #d32f2f;
+}
+
+.notification.success {
+    border-left-color: #4caf50;
+}
+
+.notification.warning {
+    border-left-color: #ff9800;
+}
+
+.notification-icon {
+    font-size: 1.3em;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-message {
+    margin: 0;
+    font-size: 0.9em;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    opacity: 0.5;
+    cursor: pointer;
+    font-size: 1.2em;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* Modal de confirmación discreto */
+.confirm-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s;
+}
+
+.confirm-modal-content {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(15px);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    animation: scaleIn 0.2s;
+}
+
+.confirm-modal-message {
+    margin: 0 0 20px 0;
+    font-size: 1em;
+    color: var(--text-color);
+    text-align: center;
+}
+
+.confirm-modal-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.confirm-modal-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.confirm-modal-btn.confirm {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.confirm-modal-btn.confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.confirm-modal-btn.cancel {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+}
+
+.confirm-modal-btn.cancel:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Botón mejorado para añadir widgets */
+.create-widgets {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 0;
+    margin-bottom: 10px;
+    position: relative;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.add-widget-btn-discrete {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.add-widget-btn-discrete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.add-widget-btn-discrete:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-widget-btn-discrete span:first-child {
+    font-size: 1.3em;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.add-widget-btn-discrete .btn-text {
+    font-size: 0.9em;
+}
+
+.widget-menu {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--card-bg);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    min-width: 180px;
+    overflow: hidden;
+    animation: scaleIn 0.2s;
+}
+
+.widget-menu-item {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: left;
+    cursor: pointer;
+    color: var(--text-color);
+    font-size: 0.95em;
+    transition: all 0.2s;
+}
+
+.widget-menu-item:last-child {
+    border-bottom: none;
+}
+
+.widget-menu-item:hover {
+    background-color: var(--primary-color);
+    color: white;
+    padding-left: 24px;
+}
+
+/* Responsive para grid */
+/* Responsive: 2 columnas en tablets, 1 columna en móviles */
+@media (max-width: 900px) {
+    .widget-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 700px;
+    }
+}
+
+@media (max-width: 600px) {
+    .widget-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 15px;
+    }
+}
+
+.optional-widget {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+
+/* ===== SISTEMA DE EXPANSIÓN SIMPLE DE WIDGETS ===== */
+
+/* Hacer títulos de widgets clicables */
+.widget-header h2 {
+    cursor: pointer !important;
+    transition: all 0.2s;
+    position: relative;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: auto;
+}
+
+.widget-header h2:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.widget-header h2::after {
+    content: '⬜';
+    opacity: 0;
+    margin-left: 8px;
+    transition: opacity 0.2s;
+    font-size: 0.7em;
+}
+
+.widget-header h2:hover::after {
+    opacity: 0.6;
+}
+
+/* Overlay oscuro detrás del widget expandido */
+.widget-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    animation: fadeIn 0.3s ease;
+}
+
+.widget-overlay.active {
+    display: block;
+}
+
+/* Widget expandido */
+.widget-item-draggable.widget-expanded {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw !important;
+    max-width: 900px !important;
+    height: 85vh !important;
+    max-height: none !important;
+    min-height: auto !important;
+    z-index: 10000 !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8) !important;
+    animation: expandWidget 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow-y: auto;
+    background: rgba(26, 26, 26, 0.98) !important;
+    border: 2px solid rgba(46, 204, 113, 0.3) !important;
+}
+
+.widget-item-draggable.widget-expanded .widget-header h2::after {
+    content: '✕';
+    opacity: 1;
+    color: #ff4444;
+    font-size: 0.9em;
+}
+
+/* Mostrar todo el contenido cuando está expandido */
+.widget-item-draggable.widget-expanded .today-plan-content,
+.widget-item-draggable.widget-expanded .water-tracker-content,
+.widget-item-draggable.widget-expanded .pills-content,
+.widget-item-draggable.widget-expanded .todo-content,
+.widget-item-draggable.widget-expanded .notes-content,
+.widget-item-draggable.widget-expanded .habit-content {
+    max-height: none !important;
+    overflow-y: visible !important;
+}
+
+@keyframes expandWidget {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .widget-item-draggable.widget-expanded {
+        width: 95vw !important;
+        height: 90vh !important;
+    }
+}
+
+/* =============================================
+   SCROLLBAR PERSONALIZADO PARA WIDGETS
+   ============================================= */
+
+/* Widgets individuales con scroll */
+.widget-item-draggable::-webkit-scrollbar,
+.widget-content::-webkit-scrollbar,
+.task-list::-webkit-scrollbar,
+.notes-textarea::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.widget-item-draggable::-webkit-scrollbar-track,
+.widget-content::-webkit-scrollbar-track,
+.task-list::-webkit-scrollbar-track,
+.notes-textarea::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.widget-item-draggable::-webkit-scrollbar-thumb,
+.widget-content::-webkit-scrollbar-thumb,
+.task-list::-webkit-scrollbar-thumb,
+.notes-textarea::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.widget-item-draggable::-webkit-scrollbar-thumb:hover,
+.widget-content::-webkit-scrollbar-thumb:hover,
+.task-list::-webkit-scrollbar-thumb:hover,
+.notes-textarea::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+/* Firefox */
+.widget-item-draggable,
+.widget-content,
+.task-list,
+.notes-textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) rgba(0, 0, 0, 0.05);
+}
