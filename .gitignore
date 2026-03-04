@@ -40,3 +40,6 @@ build/
 # Datos de usuario locales (opcional - descomentar si no quieres trackear)
 # localStorage/
 # userData/
+
+archive/recipes_extended.csv
+assets/recipes_extended.json
