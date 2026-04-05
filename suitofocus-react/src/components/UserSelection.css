@@ -1,0 +1,111 @@
+.user-select {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-xl);
+}
+.user-select__orb--1 {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: var(--accent);
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.1;
+  top: -150px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.user-select__container {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.user-select__title {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-xs);
+}
+.user-select__title span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.user-select__subtitle {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3xl);
+}
+.user-select__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-lg);
+}
+.user-select__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-xl) var(--space-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+}
+.user-select__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.user-select__avatar--new {
+  background: var(--bg-elevated) !important;
+  border: 2px dashed var(--text-muted);
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  font-weight: 300;
+}
+.user-select__name {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.user-select__delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all var(--duration-fast) ease;
+}
+.user-select__card:hover .user-select__delete {
+  opacity: 1;
+}
+.user-select__delete:hover {
+  background: var(--danger-glow);
+  color: var(--danger);
+}

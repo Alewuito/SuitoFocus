@@ -1,0 +1,181 @@
+.diet__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+.diet__header h1 { font-size: 1.75rem; margin-bottom: 4px; }
+.diet__header p { color: var(--text-secondary); font-size: 0.95rem; }
+
+/* Progression badge */
+.diet__progression {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.diet__progression--deficit {
+  background: rgba(0, 217, 166, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(0, 217, 166, 0.2);
+}
+.diet__progression--surplus {
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--accent-light);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+}
+
+/* Tabs */
+.diet__tabs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-xl);
+  background: var(--bg-card);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+}
+.diet__tab {
+  flex: 1;
+  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+.diet__tab:hover { color: var(--text-primary); }
+.diet__tab--active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+/* Days */
+.diet__days {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.diet__day {
+  cursor: pointer;
+  padding: var(--space-lg) var(--space-xl) !important;
+  overflow: hidden;
+}
+.diet__day--expanded { border-color: var(--border-accent); }
+
+.diet__day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.diet__day-header h3 { font-size: 1rem; font-weight: 600; }
+
+.diet__day-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.diet__day-kcal {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.diet__kcal-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent-light);
+  font-variant-numeric: tabular-nums;
+}
+.diet__kcal-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.diet__chevron {
+  color: var(--text-muted);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+.diet__chevron--open { transform: rotate(180deg); }
+
+/* Meals */
+.diet__meals {
+  margin-top: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  overflow: hidden;
+}
+
+.diet__meal {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  transition: all var(--duration-fast) ease;
+}
+.diet__meal--clickable {
+  cursor: pointer;
+}
+.diet__meal--clickable:hover {
+  border-color: var(--border-accent);
+  background: var(--bg-card-hover);
+}
+
+.diet__meal-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(108, 99, 255, 0.08);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  color: var(--accent-light);
+}
+
+.diet__meal-info { flex: 1; min-width: 0; }
+.diet__meal-top {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: 2px;
+}
+.diet__meal-type {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.diet__meal-time {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+.diet__meal-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.diet__meal-kcal {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--success);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

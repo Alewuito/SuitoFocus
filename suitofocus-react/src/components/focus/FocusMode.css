@@ -1,0 +1,202 @@
+.focus {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background: #050508;
+}
+
+.focus__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 80%, rgba(108,99,255,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+/* Top bar */
+.focus__topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-lg) var(--space-xl);
+  position: relative;
+  z-index: 10;
+}
+.focus__back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  transition: all var(--duration-fast) ease;
+}
+.focus__back:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+}
+
+.focus__clock {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-weight: 300;
+}
+
+.focus__element-picker {
+  display: flex;
+  gap: var(--space-xs);
+}
+.focus__el-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--duration-fast) ease;
+}
+.focus__el-btn:hover { border-color: var(--border-accent); }
+.focus__el-btn--active {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+}
+
+/* Main grid */
+.focus__grid {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3xl);
+  padding: 0 var(--space-3xl) var(--space-3xl);
+  position: relative;
+  z-index: 1;
+}
+
+/* Center element */
+.focus__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+}
+.focus__element-container {
+  width: 300px;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Timer section */
+.focus__timer-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.focus__timer-ring {
+  position: relative;
+  width: 240px;
+  height: 240px;
+}
+.focus__ring-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+.focus__ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.04);
+  stroke-width: 4;
+}
+.focus__ring-fill {
+  fill: none;
+  stroke: url(#timerGradient);
+  stroke: var(--accent);
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px var(--accent-glow));
+}
+
+.focus__timer-display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.focus__timer-digits {
+  font-size: 3.5rem;
+  font-weight: 200;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+.focus__timer-state {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: 4px;
+}
+
+/* Controls */
+.focus__controls {
+  display: flex;
+  gap: var(--space-md);
+}
+
+/* Presets */
+.focus__presets {
+  display: flex;
+  gap: var(--space-xs);
+}
+.focus__preset {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+}
+.focus__preset:hover {
+  border-color: var(--border-accent);
+  color: var(--text-primary);
+}
+.focus__preset--active {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+  color: var(--accent-light);
+}
+
+@media (max-width: 768px) {
+  .focus__grid {
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: 0 var(--space-lg) var(--space-xl);
+  }
+  .focus__element-container {
+    width: 200px;
+    height: 260px;
+  }
+  .focus__timer-ring { width: 200px; height: 200px; }
+  .focus__timer-digits { font-size: 2.5rem; }
+}

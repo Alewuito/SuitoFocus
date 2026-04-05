@@ -1,0 +1,69 @@
+.sf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-family: var(--font-family);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--duration-normal) var(--ease-out);
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.sf-btn--sm { padding: 8px 16px; font-size: 0.8rem; }
+.sf-btn--md { padding: 12px 24px; font-size: 0.9rem; }
+.sf-btn--lg { padding: 16px 32px; font-size: 1rem; }
+
+/* Primary */
+.sf-btn--primary {
+  background: var(--accent-gradient);
+  color: #fff;
+  box-shadow: 0 2px 12px var(--accent-glow);
+}
+.sf-btn--primary:hover {
+  box-shadow: 0 4px 20px rgba(108, 99, 255, 0.4);
+}
+
+/* Ghost */
+.sf-btn--ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.sf-btn--ghost:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+}
+
+/* Outline */
+.sf-btn--outline {
+  background: transparent;
+  color: var(--accent-light);
+  border: 1px solid var(--border-accent);
+}
+.sf-btn--outline:hover {
+  background: var(--accent-glow);
+}
+
+/* Danger */
+.sf-btn--danger {
+  background: var(--danger);
+  color: #fff;
+}
+.sf-btn--danger:hover {
+  box-shadow: 0 4px 20px var(--danger-glow);
+}
+
+.sf-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.sf-btn__icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.1em;
+}

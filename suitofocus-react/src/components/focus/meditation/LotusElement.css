@@ -1,0 +1,101 @@
+.lotus {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.lotus__glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.12) 0%, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: lotusGlow 4s ease-in-out infinite;
+}
+.lotus--running .lotus__glow {
+  width: 260px;
+  height: 260px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.2) 0%, transparent 70%);
+}
+.lotus--complete .lotus__glow {
+  background: radial-gradient(circle, rgba(0, 217, 166, 0.15) 0%, transparent 70%);
+}
+
+@keyframes lotusGlow {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+}
+
+.lotus__svg {
+  width: 240px;
+  height: 240px;
+  position: relative;
+  z-index: 1;
+}
+
+.lotus__water {
+  fill: rgba(108, 99, 255, 0.06);
+  stroke: rgba(108, 99, 255, 0.15);
+  stroke-width: 1;
+}
+
+.lotus__petal--outer {
+  fill: rgba(167, 139, 250, 0.3);
+  stroke: rgba(167, 139, 250, 0.5);
+  stroke-width: 0.5;
+}
+.lotus--running .lotus__petal--outer {
+  fill: rgba(167, 139, 250, 0.5);
+  stroke: rgba(167, 139, 250, 0.7);
+}
+.lotus--complete .lotus__petal--outer {
+  fill: rgba(0, 217, 166, 0.4);
+  stroke: rgba(0, 217, 166, 0.6);
+}
+
+.lotus__petal--inner {
+  fill: rgba(200, 170, 255, 0.4);
+  stroke: rgba(200, 170, 255, 0.6);
+  stroke-width: 0.5;
+}
+.lotus--running .lotus__petal--inner {
+  fill: rgba(200, 170, 255, 0.6);
+  stroke: rgba(200, 170, 255, 0.8);
+}
+.lotus--complete .lotus__petal--inner {
+  fill: rgba(100, 230, 200, 0.5);
+  stroke: rgba(100, 230, 200, 0.7);
+}
+
+.lotus__center {
+  fill: rgba(255, 220, 130, 0.5);
+  stroke: rgba(255, 220, 130, 0.8);
+  stroke-width: 1;
+}
+.lotus--complete .lotus__center {
+  fill: rgba(0, 217, 166, 0.8);
+}
+
+.lotus__breathe {
+  margin-top: var(--space-xl);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: breatheText 4s ease-in-out infinite;
+}
+.lotus--running .lotus__breathe {
+  color: var(--text-accent);
+}
+
+@keyframes breatheText {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}

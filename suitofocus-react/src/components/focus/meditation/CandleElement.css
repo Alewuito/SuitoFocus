@@ -1,0 +1,202 @@
+/* ============================================================
+   Candle Element — Premium CSS Animation
+   States: idle (gentle), running (bright), complete (smoke)
+   ============================================================ */
+
+.candle {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  justify-content: flex-end;
+  padding-bottom: 40px;
+}
+
+/* ---- Glow ---- */
+.candle__glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 50, 0.15) 0%, transparent 70%);
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+.candle--running .candle__glow {
+  width: 240px;
+  height: 240px;
+  background: radial-gradient(circle, rgba(255, 170, 50, 0.25) 0%, transparent 70%);
+  animation: glowPulse 2s ease-in-out infinite;
+}
+.candle--complete .candle__glow { opacity: 0; transition: opacity 1s ease; }
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.05); }
+}
+
+/* ---- Flame ---- */
+.candle__flame-wrapper {
+  position: relative;
+  margin-bottom: -4px;
+  z-index: 2;
+}
+
+.candle__flame {
+  width: 20px;
+  height: 50px;
+  background: linear-gradient(0deg, #ff6600 0%, #ffaa00 40%, #ffdd44 70%, #fff8e0 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: relative;
+  animation: flameFlicker 0.15s ease-in-out infinite alternate;
+  filter: blur(0.5px);
+}
+.candle--running .candle__flame {
+  width: 24px;
+  height: 60px;
+  animation: flameFlickerBright 0.12s ease-in-out infinite alternate;
+}
+.candle--idle .candle__flame {
+  width: 16px;
+  height: 42px;
+  animation: flameFlickerGentle 0.2s ease-in-out infinite alternate;
+}
+
+.candle__flame-inner {
+  position: absolute;
+  width: 8px;
+  height: 24px;
+  background: linear-gradient(0deg, #66bbff 0%, #ffffff 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.candle__flame-highlight {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.7;
+  animation: highlightPulse 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+  from { transform: scaleX(1) rotate(-1deg); }
+  to { transform: scaleX(0.95) rotate(1.5deg); }
+}
+@keyframes flameFlickerBright {
+  from { transform: scaleX(1) scaleY(1) rotate(-0.5deg); }
+  to { transform: scaleX(0.97) scaleY(1.03) rotate(1deg); }
+}
+@keyframes flameFlickerGentle {
+  from { transform: scaleX(1) rotate(-2deg); }
+  to { transform: scaleX(0.9) rotate(2deg); }
+}
+@keyframes highlightPulse {
+  from { opacity: 0.5; }
+  to { opacity: 0.9; }
+}
+
+/* ---- Smoke ---- */
+.candle__smoke {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.candle__smoke-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(180, 180, 200, 0.3);
+  border-radius: 50%;
+  filter: blur(4px);
+}
+.candle__smoke-particle--1 {
+  animation: smokeRise 3s ease-out infinite;
+}
+.candle__smoke-particle--2 {
+  animation: smokeRise 3.5s ease-out 0.5s infinite;
+  left: 6px;
+}
+.candle__smoke-particle--3 {
+  animation: smokeRise 4s ease-out 1s infinite;
+  left: -4px;
+}
+
+@keyframes smokeRise {
+  0% { transform: translateY(0) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-60px) translateX(10px) scale(2); opacity: 0.3; }
+  100% { transform: translateY(-120px) translateX(-5px) scale(3); opacity: 0; }
+}
+
+/* ---- Wick ---- */
+.candle__wick {
+  width: 2px;
+  height: 14px;
+  background: linear-gradient(180deg, #333 0%, #555 100%);
+  border-radius: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Wax body ---- */
+.candle__body {
+  width: 52px;
+  height: 160px;
+  background: linear-gradient(180deg, #f5e6d0 0%, #e8d5b8 50%, #dcc8a8 100%);
+  border-radius: 4px 4px 6px 6px;
+  position: relative;
+  box-shadow: 
+    inset -8px 0 12px rgba(0,0,0,0.08),
+    inset 4px 0 8px rgba(255,255,255,0.15),
+    0 4px 20px rgba(0,0,0,0.4);
+}
+
+.candle__shine {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, transparent 60%);
+  border-radius: 4px;
+}
+
+.candle__wax-drip {
+  position: absolute;
+  width: 10px;
+  background: #f0dcc0;
+  border-radius: 0 0 6px 6px;
+  top: 0;
+}
+.candle__wax-drip--1 {
+  height: 24px;
+  right: 6px;
+}
+.candle__wax-drip--2 {
+  height: 16px;
+  left: 10px;
+  width: 8px;
+}
+
+/* ---- Plate ---- */
+.candle__plate {
+  width: 90px;
+  height: 12px;
+  background: linear-gradient(180deg, #2a2a3e 0%, #1a1a2e 100%);
+  border-radius: 6px;
+  margin-top: 2px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+}

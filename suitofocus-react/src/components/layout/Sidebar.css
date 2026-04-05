@@ -1,0 +1,104 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-lg) 0;
+  z-index: 100;
+}
+
+.sidebar__logo {
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-gradient);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-2xl);
+  letter-spacing: -0.03em;
+}
+.sidebar__logo span {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  flex: 1;
+}
+
+.sidebar__link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  transition: all var(--duration-normal) var(--ease-out);
+  position: relative;
+}
+.sidebar__link:hover {
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+}
+
+.sidebar__link--active {
+  background: var(--accent-glow);
+  color: var(--accent-light);
+}
+.sidebar__link--active::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+}
+
+.sidebar__label {
+  display: none; /* hidden in icon mode */
+}
+
+.sidebar__footer {
+  margin-top: auto;
+}
+
+.sidebar__user {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-sm);
+}
+
+.sidebar__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: box-shadow var(--duration-normal) ease;
+}
+.sidebar__user:hover .sidebar__avatar {
+  box-shadow: 0 0 12px var(--accent-glow);
+}
